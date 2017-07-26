@@ -4,8 +4,7 @@
 \alias{tail.pclm}
 \title{Tail of PCLM Object}
 \usage{
-\method{tail}{pclm}(object, n = 6L, type = c("lt", "aggregated",
-  "nonaggregated"))
+\method{tail}{pclm}(object, n = 6L, type = c("aggregated", "nonaggregated"))
 }
 \arguments{
 \item{object}{PCLM object.}
@@ -14,8 +13,8 @@
 of rows for a life-table. If negative, all but the n last/first number of
 elements of x.}
 
-\item{type}{which life-table  should be returned. One of \code{"lt"},
-\code{"aggregated"} or \code{"nonaggregated"}.}
+\item{type}{which life-table  should be returned. One of \code{"aggregated"}
+or \code{"nonaggregated"}.}
 }
 \description{
 Tail of PCLM Object

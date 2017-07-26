@@ -4,14 +4,13 @@
 \alias{print.pclm}
 \title{Print PCLM Object}
 \usage{
-\method{print}{pclm}(object, type = c("lt", "aggregated", "nonaggregated"),
-  ...)
+\method{print}{pclm}(object, type = c("aggregated", "nonaggregated"), ...)
 }
 \arguments{
 \item{object}{PCLM object.}
 
-\item{type}{which life-table  should be returned. One of \code{"lt"},
-\code{"aggregated"} or \code{"nonaggregated"}.}
+\item{type}{which life-table  should be returned. One of \code{"aggregated"}
+or \code{"nonaggregated"}.}
 
 \item{...}{other parameters passed to \code{\link{print}}.}
 }

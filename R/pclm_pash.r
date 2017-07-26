@@ -716,12 +716,8 @@ summary.pclm <- function(object){
 #' @export
 #' @importFrom graphics barplot lines axis par box legend
 plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab, xlim, ylim, legpos.x = "topleft", legpos.y = NULL){
-  if (missing(xlab)) if (inherits(object, 'pash')) xlab <- attributes(object)$time_unit else xlab <- 'Age or time'
-  if (!inherits(object, 'pclm')) {
-    if (inherits(object, 'pash')) stop('Plot function for pash object without computed pclm is not supported.') else stop ('Object of class pclm needed')
-  } else {
-    if (inherits(object, 'pash')) object <- object$pclm
-  }
+  if (missing(xlab)) xlab <- 'Age or time'
+
  if (length(object$exposures) == 0){
    if (missing(ylab)) ylab <- 'Counts / interval length'
 
@@ -766,28 +762,18 @@ plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab,
 #' @param n A single integer. If positive, size for the resulting object: number
 #'   of rows for a life-table. If negative, all but the n last/first number of
 #'   elements of x.
-#' @param type which life-table  should be returned. One of \code{"lt"},
-#'   \code{"aggregated"} or \code{"nonaggregated"}.
+#' @param type which life-table  should be returned. One of \code{"aggregated"}
+#'   or \code{"nonaggregated"}.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
 #' @importFrom utils head
 #' @keywords internal
 #' @export
-head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated")){
-  if (!inherits(object, "pash")) {
-    if (type == "lt") stop('"lt" not supported for non-pash object.')
-    object. <- NULL
-    object.$pclm <- object
-    object <- object.
-  }
+head.pclm<-function(object, n = 6L, type = c("aggregated", "nonaggregated")){
   type <- type[1]
-  if (type == "lt")
-    head(object$lt, n = n)
-  else if (type == "aggregated")
-    head(object$pclm$grouped, n = n)
-  else if (type == "nonaggregated")
-    head(object$pclm$raw, n = n)
-  else stop('Unknown type')
+  if (type == "aggregated") head(object$grouped, n = n)
+  if (type == "nonaggregated") head(object$raw, n = n) else
+    stop('Unknown type')
 }
 
 # tail.pclm -----------------------------------------------------------
@@ -798,28 +784,18 @@ head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"
 #' @param n A single integer. If positive, size for the resulting object: number
 #'   of rows for a life-table. If negative, all but the n last/first number of
 #'   elements of x.
-#' @param type which life-table  should be returned. One of \code{"lt"},
-#'   \code{"aggregated"} or \code{"nonaggregated"}.
+#' @param type which life-table  should be returned. One of \code{"aggregated"}
+#'   or \code{"nonaggregated"}.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
 #' @importFrom utils tail
 #' @keywords internal
 #' @export
-tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated")){
-  if (!inherits(object, "pash")) {
-    if (type == "lt") stop('"lt" not supported for non-pash object.')
-    object. <- NULL
-    object.$pclm <- object
-    object <- object.
-  }
+tail.pclm<-function(object, n=6L, type = c("aggregated", "nonaggregated")){
   type <- type[1]
-  if (type == "lt")
-    tail(object$lt, n = n)
-  else if (type == "aggregated")
-    tail(object$pclm$grouped, n = n)
-  else if (type == "nonaggregated")
-    tail(object$pclm$raw, n = n)
-  else stop('Unknown type')
+  if (type == "aggregated") tail(object$grouped, n = n)
+  if (type == "nonaggregated") tail(object$raw, n = n) else
+    stop('Unknown type')
 }
 
 # print.pclm ------------------------------------------------------------
@@ -827,26 +803,16 @@ tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated"))
 #' Print PCLM Object
 #'
 #' @param object PCLM object.
-#' @param type which life-table  should be returned. One of \code{"lt"},
-#'   \code{"aggregated"} or \code{"nonaggregated"}.
+#' @param type which life-table  should be returned. One of \code{"aggregated"}
+#'   or \code{"nonaggregated"}.
 #' @param ... other parameters passed to \code{\link{print}}.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
 #' @keywords internal
 #' @export
-print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...){
-  if (!inherits(object, "pash")) {
-    if (type == "lt") stop('"lt" not supported for non-pash object.')
-    object. <- NULL
-    object.$pclm <- object
-    object <- object.
-  }
+print.pclm<-function(object, type = c("aggregated", "nonaggregated"), ...){
   type <- type[1]
-  if (type == "lt")
-    print.data.frame(object, ...)
-  else if (type == "aggregated")
-    print.data.frame(object$pclm$grouped, ...)
-  else if (type == "nonaggregated")
-    print.data.frame(object$pclm$raw, ...)
-  else stop('Unknown type')
+  if (type == "aggregated") print.data.frame(object$grouped, ...)
+  if (type == "nonaggregated") print.data.frame(object$raw, ...) else
+    stop('Unknown type')
 }
