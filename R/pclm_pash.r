@@ -1190,29 +1190,3 @@ print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...)
     print(object$pclm$raw, ...)
   else stop('Unknown type')
 }
-
-# head.pash -----------------------------------------------------------------------
-
-#' Head function for pash object
-#'
-#' @param object Pash object.
-#' @param n A single integer. If positive, size for the resulting object: number
-#'   of rows for a life-table. If negative, all but the n last/first number of
-#'   elements of x.
-#' @export
-head.pash<-function(object, n = 6L){
-  head(object$lt, n = n)
-}
-
-# tail.pash ---------------------------------------------------------------------------
-
-#' Tail function for pash object
-#'
-#' @param object pclm - pash object.
-#' @param n A single integer. If positive, size for the resulting object: number
-#'   of rows for a life-table. If negative, all but the n last/first number of
-#'   elements of x.
-#' @export
-tail.pash<-function(object, n = 6L){
-  tail(object$lt, n = n)
-}
