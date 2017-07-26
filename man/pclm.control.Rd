@@ -39,7 +39,7 @@ anticipated end of last (open) interval. If set to \code{NULL} and
 \item{zero.class.frac}{Fraction of total range of \code{x} (age/time vector)
 added as the last zero-count interval when \code{zero.class.end == NULL}.
 Used in \code{\link{pclm.compmat}}. Increase this value if the right tail
-of the PCLM fit is badly fitted (use \code{\link{plot.pclm}} to diagnose).}
+of the PCLM fit is badly fitted.}
 
 \item{bs.use}{Logical indicating if use B- or P-spline basis to speed-up
 computations. Possible values: \code{"auto"}, \code{TRUE}, and
@@ -103,8 +103,7 @@ control parameters of the \code{\link{pclm.general}} and other related functions
 \code{\link{pclm.general}},
   \code{\link{pclm.core}}, \code{\link{pclm.opt}},
   \code{\link{pclm.aggregate}}, \code{\link{pclm.compmat}},
-  \code{\link{pclm.interval.multiple}}, \code{\link{pclm.nclasses}},
-  \code{\link{plot.pclm}}, and \code{\link{summary.pclm}}.
+  \code{\link{pclm.interval.multiple}}, \code{\link{pclm.nclasses}}.
 }
 \author{
 Maciej J. Danko <\email{danko@demogr.mpg.de}>
