@@ -18,29 +18,30 @@ composition matrix.
 }
 \examples{
 \dontrun{
-# Use a simple data set
+library(pash)
+
 AU10 <- Inputlx(x = australia_10y$x, lx = australia_10y$lx,
-   nax = australia_10y$nax, nx = australia_10y$nx, last_open = TRUE)
+                nax = australia_10y$nax, nx = australia_10y$nx,
+                last_open = TRUE)
 
 # Define the open interval by zero.class.frac
 control.1 = list(x.div = 5, zero.class.frac = 0.2, zero.class.end = NULL)
 pclm.nclasses(AU10$lt$x, control = control.1) #calculate number of raw classes
-AU10p.1A <- pclm.fit(AU10, control = control.1)
-length(AU10p.1A$pclm$raw$x) # the number of raw classes after fit
+AU10p.1A <- pclm.general(x = AU10$lt$x, y = AU10$lt$ndx*10000, control = control.1)
+print(AU10p.1A, type = "aggregated")
+length(AU10p.1A$raw$x) # the number of raw classes after fit
 plot(AU10p.1A)
 
 # Define the open interval by zero.class.end
 control.2 = list(x.div = 5, zero.class.end = 109)
 pclm.nclasses(AU10$lt$x, control = control.2) #calculate the number of raw classes
-AU10p.1B <- pclm.fit(AU10, control = control.2)
-length(AU10p.1B$pclm$raw$x) # the number of raw classes after fit
+AU10p.1B <- pclm.general(x = AU10$lt$x, y = AU10$lt$ndx*10000, control = control.2)
+length(AU10p.1B$raw$x) # the number of raw classes after fit
 plot(AU10p.1B)
-
-# **** See more examples in the help for pclm.fit() function.
 }
 }
 \seealso{
-\code{\link{pclm.fit}}, \code{\link{pclm.control}},
+\code{\link{pclm.general}}, \code{\link{pclm.control}},
   \code{\link{pclm.interval.multiple}},
 }
 \author{

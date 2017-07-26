@@ -30,7 +30,7 @@ List with components:
 \description{
 Efficient estimation of smooth distribution from coarsely grouped data based
 on PCLM algorithm described in Rizzi et al. 2015. For further description see
-the reference [1] and \code{\link{pclm.fit}}.
+the reference [1] and \code{\link{pclm.general}}.
 }
 \references{
 \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient

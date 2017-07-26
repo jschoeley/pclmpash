@@ -35,7 +35,7 @@ Calculate raw and aggregated life-tables From the object returned by the
 \code{pclm.opt()} Function.
 }
 \seealso{
-\code{\link{pclm.fit}}
+\code{\link{pclm.general}}
 }
 \author{
 Maciej J. Danko <\email{danko@demogr.mpg.de}>

@@ -12,7 +12,7 @@
 
 \item{type}{Type of PCLM plot: \itemize{ \item{\code{"aggregated"} -
 Aggregated PCLM fit with interval length of \code{out.step}}. See
-\code{\link{pclm.fit}}. \item{\code{"nonaggregated"} - Nonaggregated (raw)
+\code{\link{pclm.general}}. \item{\code{"nonaggregated"} - Nonaggregated (raw)
 PCLM fit with interval of length equal to the shortest original interval
 length divided by \code{x.div}. See \code{\link{pclm.control}}}. }}
 
@@ -31,7 +31,7 @@ length divided by \code{x.div}. See \code{\link{pclm.control}}}. }}
 Diagnostic Plot for PCLM Object
 }
 \seealso{
-\code{\link{pclm.fit}} \code{\link{summary.pclm}}
+\code{\link{summary.pclm}}
 }
 \author{
 Maciej J. Danko <\email{danko@demogr.mpg.de}>

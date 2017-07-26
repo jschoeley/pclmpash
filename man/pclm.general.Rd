@@ -62,11 +62,10 @@ build composition matrix.} \item{Calculate composition matrix using
 \code{\link{pclm.compmat}}.} \item{Fit PCLM model using
 \code{\link{pclm.opt}}.} \item{Calculate aggregated (grouped) life-table
 using \code{\link{pclm.aggregate}}.} } More details for PCLM algorithm can be
-found in reference [1], but see also \code{\link{pclm.fit}} and
+found in reference [1], but see also \code{\link{pclm.general}} and
 \code{\link{pclm.compmat}}.
 }
 \examples{
-# The examples with use of the \\code{pash} object are presented in \\link{pclm.fit}.
 # Explicit examples of use \\code{pclm.general} (especially how to use exposures)
 # are to be written in a next package release.
 }
@@ -79,7 +78,7 @@ BMC Medical Research Methodology. 2016;16:59. doi:10.1186/s12874-016-0157-8.}
 }
 }
 \seealso{
-\code{\link{pclm.fit}}, \code{\link{pclm.compmat}},
+\code{\link{pclm.compmat}},
   \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
 }
 \author{

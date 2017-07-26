@@ -13,7 +13,7 @@
 Summary of the Fitted PCLM Object
 }
 \seealso{
-\code{\link{pclm.fit}} \code{\link{plot.pclm}}
+\code{\link{plot.pclm}}
 }
 \author{
 Maciej J. Danko <\email{danko@demogr.mpg.de}>

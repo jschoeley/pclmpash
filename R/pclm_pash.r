@@ -3,15 +3,14 @@
 #' Control the PCLM Fitting
 #'
 #' Auxiliary function for controlling PCLM fitting. Use this function to set
-#' control parameters of the \code{\link{pclm.fit}} and other related functions.
+#' control parameters of the \code{\link{pclm.general}} and other related functions.
 #'
 #' @param x.div Number of sub-classes within PCLM tim/age class (default is 1).
 #'   Low value of the parameter makes the PCLM computation faster. It is however
 #'   recommended to set it to higher value (e.g. 10) for better \code{nax}
 #'   estimates.
 #' @param x.auto.trans Logical indicating if automatically multiple age
-#'   intervals to remove fractions. \code{TRUE} is the recommended value. See
-#'   also examples in \code{\link{pclm.fit}}.
+#'   intervals to remove fractions. \code{TRUE} is the recommended value.
 #' @param x.max.ext Integer defining maximal multiple of an age interval. See
 #'   also \code{\link{pclm.interval.multiple}}.
 #' @param zero.class.add Logical indicating if additional zero count class (open
@@ -63,7 +62,7 @@
 #'   \code{\link{pclm.core}} function.
 #' @param pclm.tol Tolerance for \code{\link{pclm.core}} function.
 #' @return List with control parameters.
-#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.general}},
+#' @seealso \code{\link{pclm.general}},
 #'   \code{\link{pclm.core}}, \code{\link{pclm.opt}},
 #'   \code{\link{pclm.aggregate}}, \code{\link{pclm.compmat}},
 #'   \code{\link{pclm.interval.multiple}}, \code{\link{pclm.nclasses}},
@@ -145,27 +144,28 @@ pclm.interval.multiple <- function(x, control = list()) {
 #'   \code{\link{pclm.control}}.
 #' @examples
 #' \dontrun{
-#' # Use a simple data set
+#' library(pash)
+#'
 #' AU10 <- Inputlx(x = australia_10y$x, lx = australia_10y$lx,
-#'    nax = australia_10y$nax, nx = australia_10y$nx, last_open = TRUE)
+#'                 nax = australia_10y$nax, nx = australia_10y$nx,
+#'                 last_open = TRUE)
 #'
 #' # Define the open interval by zero.class.frac
 #' control.1 = list(x.div = 5, zero.class.frac = 0.2, zero.class.end = NULL)
 #' pclm.nclasses(AU10$lt$x, control = control.1) #calculate number of raw classes
-#' AU10p.1A <- pclm.fit(AU10, control = control.1)
-#' length(AU10p.1A$pclm$raw$x) # the number of raw classes after fit
+#' AU10p.1A <- pclm.general(x = AU10$lt$x, y = AU10$lt$ndx*10000, control = control.1)
+#' print(AU10p.1A, type = "aggregated")
+#' length(AU10p.1A$raw$x) # the number of raw classes after fit
 #' plot(AU10p.1A)
 #'
 #' # Define the open interval by zero.class.end
 #' control.2 = list(x.div = 5, zero.class.end = 109)
 #' pclm.nclasses(AU10$lt$x, control = control.2) #calculate the number of raw classes
-#' AU10p.1B <- pclm.fit(AU10, control = control.2)
-#' length(AU10p.1B$pclm$raw$x) # the number of raw classes after fit
+#' AU10p.1B <- pclm.general(x = AU10$lt$x, y = AU10$lt$ndx*10000, control = control.2)
+#' length(AU10p.1B$raw$x) # the number of raw classes after fit
 #' plot(AU10p.1B)
-#'
-#' # **** See more examples in the help for pclm.fit() function.
 #' }
-#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.control}},
+#' @seealso \code{\link{pclm.general}}, \code{\link{pclm.control}},
 #'   \code{\link{pclm.interval.multiple}},
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
@@ -333,7 +333,7 @@ pclm.compmat<-function(x, y, exposures = NULL, control = list()){
 #'
 #' Efficient estimation of smooth distribution from coarsely grouped data based
 #' on PCLM algorithm described in Rizzi et al. 2015. For further description see
-#' the reference [1] and \code{\link{pclm.fit}}.
+#' the reference [1] and \code{\link{pclm.general}}.
 #'
 #' @param CompositionMatrix Object constructed by \code{\link{pclm.compmat}}.
 #' @param lambda Smoothing parameter.
@@ -466,7 +466,7 @@ pclm.opt<-function(CompositionMatrix, control = list()){
 #' @return \item{\code{warn.list}}{List with warnings.}
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
-#' @seealso \code{\link{pclm.fit}}
+#' @seealso \code{\link{pclm.general}}
 #' @keywords internal
 pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), exposures.used = FALSE){
   count.type <- count.type[1]
@@ -561,7 +561,7 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 #' \code{\link{pclm.compmat}}.} \item{Fit PCLM model using
 #' \code{\link{pclm.opt}}.} \item{Calculate aggregated (grouped) life-table
 #' using \code{\link{pclm.aggregate}}.} } More details for PCLM algorithm can be
-#' found in reference [1], but see also \code{\link{pclm.fit}} and
+#' found in reference [1], but see also \code{\link{pclm.general}} and
 #' \code{\link{pclm.compmat}}.
 #' @return The output is of \code{"pclm"} class with the components:
 #' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit and
@@ -580,7 +580,6 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
 #' @examples
-#' # The examples with use of the \code{pash} object are presented in \link{pclm.fit}.
 #' # Explicit examples of use \code{pclm.general} (especially how to use exposures)
 #' # are to be written in a next package release.
 #' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
@@ -589,7 +588,7 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 #' Comparison of non-parametric methods for ungrouping coarsely aggregated data.
 #' BMC Medical Research Methodology. 2016;16:59. doi:10.1186/s12874-016-0157-8.}
 #' }
-#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.compmat}},
+#' @seealso \code{\link{pclm.compmat}},
 #'   \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
 #' @export
 pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', exposures = NULL, control = list()){
@@ -665,7 +664,7 @@ pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', ex
 #' @param object Fitted PCLM object.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
-#' @seealso \code{\link{pclm.fit}} \code{\link{plot.pclm}}
+#' @seealso \code{\link{plot.pclm}}
 #' @keywords internal
 #' @export
 summary.pclm <- function(object){
@@ -700,7 +699,7 @@ summary.pclm <- function(object){
 #' @param object Fitted PCLM object.
 #' @param type Type of PCLM plot: \itemize{ \item{\code{"aggregated"} -
 #'   Aggregated PCLM fit with interval length of \code{out.step}}. See
-#'   \code{\link{pclm.fit}}. \item{\code{"nonaggregated"} - Nonaggregated (raw)
+#'   \code{\link{pclm.general}}. \item{\code{"nonaggregated"} - Nonaggregated (raw)
 #'   PCLM fit with interval of length equal to the shortest original interval
 #'   length divided by \code{x.div}. See \code{\link{pclm.control}}}. }
 #' @param xlab Optional label for the X-axis.
@@ -712,7 +711,7 @@ summary.pclm <- function(object){
 #'
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
-#' @seealso \code{\link{pclm.fit}} \code{\link{summary.pclm}}
+#' @seealso \code{\link{summary.pclm}}
 #' @keywords internal
 #' @export
 #' @importFrom graphics barplot lines axis par box legend

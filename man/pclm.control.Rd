@@ -20,8 +20,7 @@ recommended to set it to higher value (e.g. 10) for better \code{nax}
 estimates.}
 
 \item{x.auto.trans}{Logical indicating if automatically multiple age
-intervals to remove fractions. \code{TRUE} is the recommended value. See
-also examples in \code{\link{pclm.fit}}.}
+intervals to remove fractions. \code{TRUE} is the recommended value.}
 
 \item{x.max.ext}{Integer defining maximal multiple of an age interval. See
 also \code{\link{pclm.interval.multiple}}.}
@@ -93,7 +92,7 @@ List with control parameters.
 }
 \description{
 Auxiliary function for controlling PCLM fitting. Use this function to set
-control parameters of the \code{\link{pclm.fit}} and other related functions.
+control parameters of the \code{\link{pclm.general}} and other related functions.
 }
 \references{
 \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
@@ -101,7 +100,7 @@ control parameters of the \code{\link{pclm.fit}} and other related functions.
   Epidemiol. 2015;182:138?47.} }
 }
 \seealso{
-\code{\link{pclm.fit}}, \code{\link{pclm.general}},
+\code{\link{pclm.general}},
   \code{\link{pclm.core}}, \code{\link{pclm.opt}},
   \code{\link{pclm.aggregate}}, \code{\link{pclm.compmat}},
   \code{\link{pclm.interval.multiple}}, \code{\link{pclm.nclasses}},
