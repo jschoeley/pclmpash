@@ -29,12 +29,12 @@
 #' @param bs.use Logical indicating if use B- or P-spline basis to speed-up
 #'   computations. Possible values: \code{"auto"}, \code{TRUE}, and
 #'   \code{FALSE}. Used by \code{\link{pclm.compmat}} function.
-#' @param bs.method Basis for B- or P-spline used by \code{\link{pclm.compmat}}
-#'   function. Possible values: \itemize{ \item{\code{"MortalitySmooth"}}{ -
-#'   gives "P-splines" basis based on \code{\link{MortSmooth_bbase}}
-#'   \code{\{\link{MortalitySmooth}\}} (recommended)} \item{\code{"bs"}}{ -
-#'   gives basic B-splines basis based on \code{\link{bs}}
-#'   \code{\{\link{splines}\}}.} }
+#' @param bs.method Basis for B- or P-spline used by \code{\link{pclm.compmat}} function.
+#' Possible values:
+#' \itemize{
+#' \item{\code{"MortalitySmooth"}}{ - gives "P-splines" basis based on \code{\link[MortalitySmooth]{MortSmooth_bbase}} (recommended).}
+#' \item{\code{"bs"}}{ - gives basic B-splines basis based on \code{\link[splines]{bs}}.}
+#' }
 #' @param bs.df B- or P- spline degree of freedom (df, number of inner knots) or
 #'   a way to its calculation used in \code{\link{pclm.compmat}} function. The
 #'   value is automatically limited by the \code{bs.df.max}. It can take

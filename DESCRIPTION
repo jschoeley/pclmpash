@@ -20,6 +20,7 @@ Imports:
 Suggests:
   pash,
   knitr,
-  rmarkdown
+  rmarkdown,
+  MortalitySmooth
 VignetteBuilder: knitr
 

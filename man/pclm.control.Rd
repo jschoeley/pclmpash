@@ -45,12 +45,12 @@ of the PCLM fit is badly fitted (use \code{\link{plot.pclm}} to diagnose).}
 computations. Possible values: \code{"auto"}, \code{TRUE}, and
 \code{FALSE}. Used by \code{\link{pclm.compmat}} function.}
 
-\item{bs.method}{Basis for B- or P-spline used by \code{\link{pclm.compmat}}
-function. Possible values: \itemize{ \item{\code{"MortalitySmooth"}}{ -
-gives "P-splines" basis based on \code{\link{MortSmooth_bbase}}
-\code{\{\link{MortalitySmooth}\}} (recommended)} \item{\code{"bs"}}{ -
-gives basic B-splines basis based on \code{\link{bs}}
-\code{\{\link{splines}\}}.} }}
+\item{bs.method}{Basis for B- or P-spline used by \code{\link{pclm.compmat}} function.
+Possible values:
+\itemize{
+\item{\code{"MortalitySmooth"}}{ - gives "P-splines" basis based on \code{\link[MortalitySmooth]{MortSmooth_bbase}} (recommended).}
+\item{\code{"bs"}}{ - gives basic B-splines basis based on \code{\link[splines]{bs}}.}
+}}
 
 \item{bs.df}{B- or P- spline degree of freedom (df, number of inner knots) or
 a way to its calculation used in \code{\link{pclm.compmat}} function. The
