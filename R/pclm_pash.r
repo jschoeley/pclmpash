@@ -7,70 +7,77 @@ require(pash)
 
 #' Auxiliary for controlling PCLM fitting
 #'
-#' @description
-#' Auxiliary function for controlling PCLM fitting. Use this function to set control
-#' parameters of the \code{\link{pclm.fit}} and other related functions.
+#' Auxiliary function for controlling PCLM fitting. Use this function to set
+#' control parameters of the \code{\link{pclm.fit}} and other related functions.
 #'
 #' @param x.div Number of sub-classes within PCLM tim/age class (default is 1).
-#' Low value of the parameter makes the PCLM computation faster. It is however recommended to set
-#' it to higher value (e.g. 10) for better \code{nax} estimates.
-#' @param x.auto.trans Logical indicating if automatically multiple age intervals to remove fractions.
-#' \code{TRUE} is the recommended value. See also examples in \code{\link{pclm.fit}}.
-#' @param x.max.ext Integer defining maximal multiple of an age interval. See also \code{\link{pclm.interval.multiple}}.
-#' @param zero.class.add Logical indicating if additional zero count class (open interval)
-#' should be added after last age class. \code{TRUE} is the recommended value. See \code{\link{pclm.nclasses}} and \code{\link{pclm.compmat}}.
-#' @param zero.class.end Positive indicating the end of zero count class = anticipated end of
-#' last (open) interval. If set to \code{NULL} and \code{zero.class.add == TRUE} then it is calculated
-#' automatically based on \code{zero.class.frac}. See \code{\link{pclm.nclasses}} and \code{\link{pclm.compmat}}.
-#' @param zero.class.frac Fraction of total range of \code{x} (age/time vector) added as the last zero-count interval
-#' when \code{zero.class.end == NULL}. Used in \code{\link{pclm.compmat}}. Increase this value if the right tail
-#' of the PCLM fit is badly fitted (use \code{\link{plot.pclm}} to diagnose).
-#' @param bs.use Logical indicating if use B- or P-spline basis to speed-up computations.
-#' Possible values: \code{"auto"}, \code{TRUE}, and \code{FALSE}. Used by \code{\link{pclm.compmat}} function.
-#' @param bs.method Basis for B- or P-spline used by \code{\link{pclm.compmat}} function.
-#' Possible values:
-#' \itemize{
-#' \item{\code{"MortalitySmooth"}}{ - gives "P-splines" basis based on \code{\link{MortSmooth_bbase}}
-#' \code{\{\link{MortalitySmooth}\}} (recommended)}
-#' \item{\code{"bs"}}{ - gives basic B-splines basis based on \code{\link{bs}} \code{\{\link{splines}\}}.}
-#' }
-#' @param bs.df B- or P- spline degree of freedom (df, number of inner knots)
-#' or a way to its calculation used in \code{\link{pclm.compmat}} function.
-#' The value is automatically limited by the \code{bs.df.max}.
-#' It can take corresponding values:
-#' \itemize{
-#' \item{\code{"maxprec"}}{ - df equal to the number of ungrouped (raw) age classes (recommended option).}
-#' \item{\code{"thumb"}}{ - 'rule of thumb': one knot for the B-spline basis each 4-5 observations.}
-#' \item{\code{integer}}{ - df given explicitly.}
-#' }
+#'   Low value of the parameter makes the PCLM computation faster. It is however
+#'   recommended to set it to higher value (e.g. 10) for better \code{nax}
+#'   estimates.
+#' @param x.auto.trans Logical indicating if automatically multiple age
+#'   intervals to remove fractions. \code{TRUE} is the recommended value. See
+#'   also examples in \code{\link{pclm.fit}}.
+#' @param x.max.ext Integer defining maximal multiple of an age interval. See
+#'   also \code{\link{pclm.interval.multiple}}.
+#' @param zero.class.add Logical indicating if additional zero count class (open
+#'   interval) should be added after last age class. \code{TRUE} is the
+#'   recommended value. See \code{\link{pclm.nclasses}} and
+#'   \code{\link{pclm.compmat}}.
+#' @param zero.class.end Positive indicating the end of zero count class =
+#'   anticipated end of last (open) interval. If set to \code{NULL} and
+#'   \code{zero.class.add == TRUE} then it is calculated automatically based on
+#'   \code{zero.class.frac}. See \code{\link{pclm.nclasses}} and
+#'   \code{\link{pclm.compmat}}.
+#' @param zero.class.frac Fraction of total range of \code{x} (age/time vector)
+#'   added as the last zero-count interval when \code{zero.class.end == NULL}.
+#'   Used in \code{\link{pclm.compmat}}. Increase this value if the right tail
+#'   of the PCLM fit is badly fitted (use \code{\link{plot.pclm}} to diagnose).
+#' @param bs.use Logical indicating if use B- or P-spline basis to speed-up
+#'   computations. Possible values: \code{"auto"}, \code{TRUE}, and
+#'   \code{FALSE}. Used by \code{\link{pclm.compmat}} function.
+#' @param bs.method Basis for B- or P-spline used by \code{\link{pclm.compmat}}
+#'   function. Possible values: \itemize{ \item{\code{"MortalitySmooth"}}{ -
+#'   gives "P-splines" basis based on \code{\link{MortSmooth_bbase}}
+#'   \code{\{\link{MortalitySmooth}\}} (recommended)} \item{\code{"bs"}}{ -
+#'   gives basic B-splines basis based on \code{\link{bs}}
+#'   \code{\{\link{splines}\}}.} }
+#' @param bs.df B- or P- spline degree of freedom (df, number of inner knots) or
+#'   a way to its calculation used in \code{\link{pclm.compmat}} function. The
+#'   value is automatically limited by the \code{bs.df.max}. It can take
+#'   corresponding values: \itemize{ \item{\code{"maxprec"}}{ - df equal to the
+#'   number of ungrouped (raw) age classes (recommended option).}
+#'   \item{\code{"thumb"}}{ - 'rule of thumb': one knot for the B-spline basis
+#'   each 4-5 observations.} \item{\code{integer}}{ - df given explicitly.} }
 #' @param bs.df.max Maximal number of knots (df) for B- or P-spline basis.
-#' Defaut value is 200, but can be decreased if computations are slow.
-#' Used in \code{\link{pclm.compmat}}.
+#'   Defaut value is 200, but can be decreased if computations are slow. Used in
+#'   \code{\link{pclm.compmat}}.
 #' @param bs.deg Degree of the piecewise polynomial for B- or P-spline basis.
-#' Default and recommended value is 3. Used in \code{\link{pclm.compmat}}.
+#'   Default and recommended value is 3. Used in \code{\link{pclm.compmat}}.
 #' @param opt.method Selection criterion for \code{lambda} (smooth parameter) in
-#' \code{\link{pclm.opt}} function. Possible values are \code{"AIC"} and \code{"BIC"} (recommended).
-#' @param opt.tol Tolerance for \code{\link{pclm.opt}} function that estimates smooth
-#' parameter \code{lambda}.
-#' @param pclm.deg Order of differences of the components of \code{b} (PCLM coeficients, beta in the reference [1]).
-#' Default value is 2, some other values may cause algorithm to not
-#' work properly. Used by \code{\link{pclm.core}} function.
+#'   \code{\link{pclm.opt}} function. Possible values are \code{"AIC"} and
+#'   \code{"BIC"} (recommended).
+#' @param opt.tol Tolerance for \code{\link{pclm.opt}} function that estimates
+#'   smooth parameter \code{lambda}.
+#' @param pclm.deg Order of differences of the components of \code{b} (PCLM
+#'   coeficients, beta in the reference [1]). Default value is 2, some other
+#'   values may cause algorithm to not work properly. Used by
+#'   \code{\link{pclm.core}} function.
 #' @param pclm.max.iter Maximal number of iterations in \code{\link{pclm.core}}
-#' function. Default is 100, but increase it when got a warning.
-#' @param pclm.lsfit.tol Tolerance for \code{\link{lsfit}} function used
-#' in \code{\link{pclm.core}} function.
+#'   function. Default is 100, but increase it when got a warning.
+#' @param pclm.lsfit.tol Tolerance for \code{\link{lsfit}} function used in
+#'   \code{\link{pclm.core}} function.
 #' @param pclm.tol Tolerance for \code{\link{pclm.core}} function.
 #' @return List with control parameters.
-#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.general}}, \code{\link{pclm.core}},
-#' \code{\link{pclm.opt}}, \code{\link{pclm.aggregate}}, \code{\link{pclm.compmat}},
-#' \code{\link{pclm.interval.multiple}}, \code{\link{pclm.nclasses}},
-#' \code{\link{plot.pclm}}, and \code{\link{summary.pclm}}.
-#' @references
-#' \enumerate{
-#' \item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from
-#' coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
-#' }
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.general}},
+#'   \code{\link{pclm.core}}, \code{\link{pclm.opt}},
+#'   \code{\link{pclm.aggregate}}, \code{\link{pclm.compmat}},
+#'   \code{\link{pclm.interval.multiple}}, \code{\link{pclm.nclasses}},
+#'   \code{\link{plot.pclm}}, and \code{\link{summary.pclm}}.
+#' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+#'   estimation of smooth distributions from coarsely grouped data. Am J
+#'   Epidemiol. 2015;182:138?47.} }
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @export
 pclm.control<-function(x.div = 1L,
                        x.auto.trans = TRUE,
@@ -95,23 +102,31 @@ pclm.control<-function(x.div = 1L,
     stop('bs.df can take "maxprec", "thumb", or any positive integer value')
   if (!(bs.method[1] %in% c('MortalitySmooth', 'bs'))) stop ('"MortalitySmooth" or "bs" can only be used for bs.method')
 
-  list(x.max.ext = x.max.ext, x.auto.trans = x.auto.trans, x.div = x.div, zero.class.add = zero.class.add, zero.class.end = zero.class.end,
-       zero.class.frac = zero.class.frac, bs.use = bs.use, bs.method = bs.method[1], bs.df = bs.df[1], bs.df.max = bs.df.max, bs.deg = bs.deg,
-       opt.method = opt.method[1], opt.tol = opt.tol, pclm.deg = pclm.deg, pclm.max.iter = pclm.max.iter, pclm.lsfit.tol = pclm.lsfit.tol,
-       pclm.tol = pclm.tol)
+  list(x.max.ext = x.max.ext, x.auto.trans = x.auto.trans, x.div = x.div,
+       zero.class.add = zero.class.add, zero.class.end = zero.class.end,
+       zero.class.frac = zero.class.frac, bs.use = bs.use,
+       bs.method = bs.method[1], bs.df = bs.df[1], bs.df.max = bs.df.max,
+       bs.deg = bs.deg, opt.method = opt.method[1], opt.tol = opt.tol,
+       pclm.deg = pclm.deg, pclm.max.iter = pclm.max.iter,
+       pclm.lsfit.tol = pclm.lsfit.tol, pclm.tol = pclm.tol)
 }
 
 # pclm.interval.multiple ---------------------------------------------------------------
 
 #' Multiple for the original age/time interval length
-#' @description
-#' Calculates minimal multiple of the orginal age/time interval length to remove fractions in \code{x}.
-#' The function (together with \code{x} and some control parameters) is used to calculate the
-#' internal (raw, nonaggregated) interval length during PCLM computations.
+#'
+#' Calculates minimal multiple of the orginal age/time interval length to remove
+#' fractions in \code{x}. The function (together with \code{x} and some control
+#' parameters) is used to calculate the internal (raw, nonaggregated) interval
+#' length during PCLM computations.
+#'
 #' @param x Vector with start of the interval for age/time classes.
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
-#' @seealso \code{\link{pclm.general}}, \code{\link{pclm.control}}, and \code{\link{pclm.nclasses}}.
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
+#' @seealso \code{\link{pclm.general}}, \code{\link{pclm.control}}, and
+#'   \code{\link{pclm.nclasses}}.
 #' @export
 pclm.interval.multiple <- function(x, control = list()) {
   control <- do.call("pclm.control", control)
@@ -127,10 +142,11 @@ pclm.interval.multiple <- function(x, control = list()) {
 
 #' Calculate the number of PCLM internal (raw) classes
 #'
-#' @description
 #' Calculate the number of PCLM internal (raw) classes.
+#'
 #' @param x Vector with start of the interval for age/time classes.
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
 #' @examples
 #' \dontrun{
 #' # Use a simple data set
@@ -153,8 +169,10 @@ pclm.interval.multiple <- function(x, control = list()) {
 #'
 #' # **** See more examples in the help for pclm.fit() function.
 #' }
-#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.control}}, \code{\link{pclm.interval.multiple}},
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.control}},
+#'   \code{\link{pclm.interval.multiple}},
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @export
 pclm.nclasses<-function(x, control = list()) {
   control <- do.call("pclm.control", control)
@@ -176,43 +194,53 @@ pclm.nclasses<-function(x, control = list()) {
 
 #' Create composition matrix object
 #'
-#' @description
-#' Construct the composition matrix object for automatically recalibrated age classes. \cr\cr \emph{\bold{The internal function}}.
+#' Construct the composition matrix object for automatically recalibrated age
+#' classes. \cr\cr \emph{\bold{The internal function}}.
 #'
-#' @param x Vector with start of the interval for age/time classes. x * x.div must be an integer.
-#' The appropriate correction for fractional intervals based on the interval multiple (\code{\link{pclm.interval.multiple}}) is performed in \code{\link{pclm.general}}.
-#' @param y Vector with counts, e.g. \code{ndx}. It must have the same length as \code{x}.
-#' @param exposures Vector with exposures used to calculate smoothed mortality rates (see reference [1] and \code{\link{pclm.general}}).
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
+#' @param x Vector with start of the interval for age/time classes. x * x.div
+#'   must be an integer. The appropriate correction for fractional intervals
+#'   based on the interval multiple (\code{\link{pclm.interval.multiple}}) is
+#'   performed in \code{\link{pclm.general}}.
+#' @param y Vector with counts, e.g. \code{ndx}. It must have the same length as
+#'   \code{x}.
+#' @param exposures Vector with exposures used to calculate smoothed mortality
+#'   rates (see reference [1] and \code{\link{pclm.general}}).
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
 #' @return List with components:
 #' @return \item{\code{C}}{ Composition matrix.}
 #' @return \item{\code{X}}{ B-spline base, P-spline base, or identity matrix.}
 #' @return \item{\code{x}}{ Corrected age/time vector.}
 #' @return \item{\code{y}}{ Corrected vector with counts.}
-#' @return \item{\code{open.int.len}}{ Length of the open interval in age classes.}
-#' @return \item{\code{exposures}}{ Vector with exposures if it was used to construct the composition matrix.}
-#' @return \item{\code{control}}{Used control parameters, see \code{\link{pclm.control}}.}
+#' @return \item{\code{open.int.len}}{ Length of the open interval in age
+#'   classes.}
+#' @return \item{\code{exposures}}{ Vector with exposures if it was used to
+#'   construct the composition matrix.}
+#' @return \item{\code{control}}{Used control parameters, see
+#'   \code{\link{pclm.control}}.}
 #' @return \item{\code{warn.list}}{ List with warnings.}
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
-#' @details
-#' The details of matrix construction can be found in reference [1].
-#' if \code{bs.use == TRUE} then P- or B- splines are used instead of identity matrix (see \code{\link{pclm.control}}).\cr\cr
-#' The dimension of constructed composition matrix can be determined before its computation.
-#' The shorter dimension equals to the length of data vector + 1, whereas the longer dimension is
-#' determined by the function \code{\link{pclm.nclasses}} and for \code{zero.class.end == NULL} equals:\cr\cr
-#' \code{(x.div * (max(x) - min(x)) * m) * (1 + zero.class.frac) + 1}\cr\cr
-#' or\cr\cr
-#' \code{x.div * (zero.class.end - min(x)) * m + 1}\cr\cr
-#' otherwise,
-#' where \code{m} is an interval multiple calculated by \code{\link{pclm.interval.multiple}}.
-#' See also \code{\link{pclm.nclasses}}.
-#' @references
-#' \enumerate{
-#' \item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
-#' \item{Camarda, C. G. (2012). MortalitySmooth: An R Package for Smoothing Poisson Counts with P-Splines. Journal of Statistical Software. 50, 1-24.}
-#' \item{Hastie, T. J. (1992) Generalized additive models. Chapter 7 of Statistical Models in S eds J. M. Chambers and T. J. Hastie, Wadsworth & Brooks/Cole.}
-#' }
-#' @seealso \code{\link{pclm.general}}, \code{\link{pclm.control}}, \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
+#' @details The details of matrix construction can be found in reference [1]. if
+#' \code{bs.use == TRUE} then P- or B- splines are used instead of identity
+#' matrix (see \code{\link{pclm.control}}).\cr\cr The dimension of constructed
+#' composition matrix can be determined before its computation. The shorter
+#' dimension equals to the length of data vector + 1, whereas the longer
+#' dimension is determined by the function \code{\link{pclm.nclasses}} and for
+#' \code{zero.class.end == NULL} equals:\cr\cr \code{(x.div * (max(x) - min(x))
+#' * m) * (1 + zero.class.frac) + 1}\cr\cr or\cr\cr \code{x.div *
+#' (zero.class.end - min(x)) * m + 1}\cr\cr otherwise, where \code{m} is an
+#' interval multiple calculated by \code{\link{pclm.interval.multiple}}. See
+#' also \code{\link{pclm.nclasses}}.
+#' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+#' estimation of smooth distributions from coarsely grouped data. Am J
+#' Epidemiol. 2015;182:138?47.} \item{Camarda, C. G. (2012). MortalitySmooth: An
+#' R Package for Smoothing Poisson Counts with P-Splines. Journal of Statistical
+#' Software. 50, 1-24.} \item{Hastie, T. J. (1992) Generalized additive models.
+#' Chapter 7 of Statistical Models in S eds J. M. Chambers and T. J. Hastie,
+#' Wadsworth & Brooks/Cole.} }
+#' @seealso \code{\link{pclm.general}}, \code{\link{pclm.control}},
+#'   \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
 #' @keywords internal
 pclm.compmat<-function(x, y, exposures = NULL, control = list()){
   require(Matrix)
@@ -307,28 +335,30 @@ pclm.compmat<-function(x, y, exposures = NULL, control = list()){
 }
 
 # pclm.core ------------------------------------------------------------------------
+
 #' Fit the penalized composite link model (PCLM)
 #'
-#' @description
-#' Efficient estimation of smooth distribution from coarsely grouped data based on
-#' PCLM algorithm described in Rizzi et al. 2015.
-#' For further description see the reference [1] and \code{\link{pclm.fit}}.\cr\cr
-#' \emph{\bold{The internal function}}.
+#' Efficient estimation of smooth distribution from coarsely grouped data based
+#' on PCLM algorithm described in Rizzi et al. 2015. For further description see
+#' the reference [1] and \code{\link{pclm.fit}}.\cr\cr \emph{\bold{The internal
+#' function}}.
+#'
 #' @param CompositionMatrix Object constructed by \code{\link{pclm.compmat}}.
 #' @param lambda Smoothing parameter.
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
 #' @return List with components:
 #' @return \item{\code{gamma}}{  Ungrouped counts.}
 #' @return \item{\code{dev}}{Deviance.}
 #' @return \item{\code{aic}}{AIC for the fitted model.}
 #' @return \item{\code{bic}}{BIC for the fitted model.}
 #' @return \item{\code{warn.list}}{List with warnings.}
-#' @author
-#' Silvia Rizzi (original code, see Appendix #2 of the reference [1]), Maciej J. Danko (modification) <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
-#' @references
-#' \enumerate{
-#' \item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
-#' }
+#' @author Silvia Rizzi (original code, see Appendix #2 of the reference [1]),
+#' Maciej J. Danko (modification) <\email{danko@demogr.mpg.de}>
+#' <\email{maciej.danko@gmail.com}>
+#' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+#' estimation of smooth distributions from coarsely grouped data. Am J
+#' Epidemiol. 2015;182:138?47.} }
 #' @keywords internal
 pclm.core <- function(CompositionMatrix, lambda = 1, control = list()){
   control <- do.call("pclm.control", control)
@@ -381,22 +411,24 @@ pclm.core <- function(CompositionMatrix, lambda = 1, control = list()){
 # pclm.opt --------------------------------------------------------------------
 
 #' Optimize the smooth parameter \code{lambda} for PCLM method
-#' @description
-#' \emph{\bold{The internal function}}.
+#'
 #' @param CompositionMatrix Output of \code{\link{pclm.compmat}}.
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
 #' @return List with components:
 #' @return \item{\code{X}}{Ungrouped age/time classes.}
 #' @return \item{\code{Y}}{Ungrouped counts.}
 #' @return \item{\code{lambda}}{Optimal smooth parameter.}
-#' @return \item{\code{fit}}{Output of the \code{\link{pclm.core}} derived for the optimal \code{lambda}.}
-#' @return \item{\code{CompositionMatrix}}{Used composition matrix. See also \code{\link{pclm.compmat}}.}
+#' @return \item{\code{fit}}{Output of the \code{\link{pclm.core}} derived for
+#'   the optimal \code{lambda}.}
+#' @return \item{\code{CompositionMatrix}}{Used composition matrix. See also
+#'   \code{\link{pclm.compmat}}.}
 #' @return \item{\code{warn.list}}{List with warnings.}
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
-#' @references
-#' \enumerate{
-#' \item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
-#' }
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
+#' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+#' estimation of smooth distributions from coarsely grouped data. Am J
+#' Epidemiol. 2015;182:138?47.} }
 #' @keywords internal
 pclm.opt<-function(CompositionMatrix, control = list()){
   warn.list <- list()
@@ -423,19 +455,23 @@ pclm.opt<-function(CompositionMatrix, control = list()){
 
 # pclm.aggregate ---------------------------------------------------
 
-#' Calculate raw and aggregated life table from the object returned by \code{pclm.opt()} function.
-#' @description
-#' \emph{\bold{The internal function}}.
+#' Calculate raw and aggregated life table from the object returned by
+#' \code{pclm.opt()} function.
+#'
 #' @param fit Object obtained by \code{\link{pclm.opt}} function.
 #' @param out.step Output interval length.
-#' @param count.type Type of the data, deaths(\code{"DX"})(default) or exposures(\code{"LX"}.)
-#' @param exposures.used Logical indicating if exposures were used to create composition matrix.
+#' @param count.type Type of the data, deaths(\code{"DX"})(default) or
+#'   exposures(\code{"LX"}.)
+#' @param exposures.used Logical indicating if exposures were used to create
+#'   composition matrix.
 #' @return List with components:
-#' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit defined by \code{out.step}.}
+#' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit defined
+#'   by \code{out.step}.}
 #' @return \item{\code{raw}}{Life-table based on original (raw) PCLM fit.}
 #' @return \item{\code{fit}}{PCLM fit used to construct life-tables.}
 #' @return \item{\code{warn.list}}{List with warnings.}
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @seealso \code{\link{pclm.fit}}
 #' @keywords internal
 pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), exposures.used = FALSE){
@@ -508,46 +544,58 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 # pclm.general -------------------------------------------------------------------------
 
 #' General PCLM computations
-#' @description
+#'
 #' Main procedure to calculate PCLM with automated step.
+#'
 #' @param x Vector with start of the interval for age/time classes.
-#' @param y Vector with counts, e.g. \code{ndx}. It must have the same length as \code{x}.
-#' @param count.type Type of the data, deaths(\code{"DX"})(default) or exposures(\code{"LX"}.)
-#' @param out.step Age interval length in output aggregated life-table. If set to \code{"auto"}
-#'  then the parameter is automatically set to the length of the shortest age/time interval of \code{x}.
-#' @param exposures Optional exposures to calculate smooth mortality rates.
-#' A vector of the same length as \code{x} and \code{y}. See reference [1] for further details.
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
-#' @details
-#' The function has four major steps:
-#' \enumerate{
-#' \item{Calculate interval multiple (\code{\link{pclm.interval.multiple}} to remove fractional parts from \code{x} vector.
-#' The removal of fractional parts is necessary to build composition matrix.}
-#' \item{Calculate composition matrix using \code{\link{pclm.compmat}}.}
-#' \item{Fit PCLM model using \code{\link{pclm.opt}}.}
-#' \item{Calculate aggregated (grouped) life-table using \code{\link{pclm.aggregate}}.}
-#' }
-#' More details for PCLM algorithm can be found in reference [1], but see also \code{\link{pclm.fit}} and \code{\link{pclm.compmat}}.
-#' @return
-#' The output is of \code{"pclm"} class with the components:
-#' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit and defined by \code{out.step}.}
+#' @param y Vector with counts, e.g. \code{ndx}. It must have the same length as
+#'   \code{x}.
+#' @param count.type Type of the data, deaths(\code{"DX"})(default) or
+#'   exposures(\code{"LX"}.)
+#' @param out.step Age interval length in output aggregated life-table. If set
+#'   to \code{"auto"} then the parameter is automatically set to the length of
+#'   the shortest age/time interval of \code{x}.
+#' @param exposures Optional exposures to calculate smooth mortality rates. A
+#'   vector of the same length as \code{x} and \code{y}. See reference [1] for
+#'   further details.
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
+#' @details The function has four major steps: \enumerate{ \item{Calculate
+#' interval multiple (\code{\link{pclm.interval.multiple}} to remove fractional
+#' parts from \code{x} vector. The removal of fractional parts is necessary to
+#' build composition matrix.} \item{Calculate composition matrix using
+#' \code{\link{pclm.compmat}}.} \item{Fit PCLM model using
+#' \code{\link{pclm.opt}}.} \item{Calculate aggregated (grouped) life-table
+#' using \code{\link{pclm.aggregate}}.} } More details for PCLM algorithm can be
+#' found in reference [1], but see also \code{\link{pclm.fit}} and
+#' \code{\link{pclm.compmat}}.
+#' @return The output is of \code{"pclm"} class with the components:
+#' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit and
+#'   defined by \code{out.step}.}
 #' @return \item{\code{raw}}{Life-table based on original (raw) PCLM fit.}
 #' @return \item{\code{fit}}{PCLM fit used to construct life-tables.}
-#' @return \item{\code{m}}{Interval multiple, see \code{\link{pclm.interval.multiple}}, \code{\link{pclm.compmat}}.}
-#' @return \item{\code{x.div}}{Value of \code{x.div}, see \code{\link{pclm.control}}.}
-#' @return \item{\code{out.step}}{Interval length of aggregated life-table, see \code{\link{pclm.control}}.}
-#' @return \item{\code{control}}{Used control parameters, see \code{\link{pclm.control}}.}
+#' @return \item{\code{m}}{Interval multiple, see
+#'   \code{\link{pclm.interval.multiple}}, \code{\link{pclm.compmat}}.}
+#' @return \item{\code{x.div}}{Value of \code{x.div}, see
+#'   \code{\link{pclm.control}}.}
+#' @return \item{\code{out.step}}{Interval length of aggregated life-table, see
+#'   \code{\link{pclm.control}}.}
+#' @return \item{\code{control}}{Used control parameters, see
+#'   \code{\link{pclm.control}}.}
 #' @return \item{\code{warn.list}}{List with warnings.}
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @examples
 #' # The examples with use of the \code{pash} object are presented in \link{pclm.fit}.
 #' # Explicit examples of use \code{pclm.general} (especially how to use exposures) are to be written in a next package release.
-#' @references
-#' \enumerate{
-#' \item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
-#' \item{Rizzi S, Thinggaard M, Engholm G, et al. Comparison of non-parametric methods for ungrouping coarsely aggregated data. BMC Medical Research Methodology. 2016;16:59. doi:10.1186/s12874-016-0157-8.}
+#' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+#' estimation of smooth distributions from coarsely grouped data. Am J
+#' Epidemiol. 2015;182:138?47.} \item{Rizzi S, Thinggaard M, Engholm G, et al.
+#' Comparison of non-parametric methods for ungrouping coarsely aggregated data.
+#' BMC Medical Research Methodology. 2016;16:59. doi:10.1186/s12874-016-0157-8.}
 #' }
-#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.compmat}}, \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
+#' @seealso \code{\link{pclm.fit}}, \code{\link{pclm.compmat}},
+#'   \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
 #' @export
 pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', exposures = NULL, control = list()){
   control <- do.call("pclm.control", control)
@@ -619,10 +667,9 @@ pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', ex
 
 #' Summary of the fitted PCLM object
 #'
-#' @description
-#' \emph{bold{Generic function}}
 #' @param object Fitted PCLM object.
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @seealso \code{\link{pclm.fit}} \code{\link{plot.pclm}}
 #' @keywords internal
 #' @export
@@ -664,24 +711,22 @@ summary.pclm <- function(object){
 # plot.pclm ---------------------------------------------------------------------------
 
 #' Diagnostic plot for PCLM object.
-#' @description
-#' \emph{bold{Generic function}}
+#'
 #' @param object Fitted PCLM object.
-#' @param type Type of PCLM plot:
-#' \itemize{
-#' \item{\code{"aggregated"} - Aggregated PCLM fit with interval length of \code{out.step}}.
-#' See \code{\link{pclm.fit}}.
-#' \item{\code{"nonaggregated"} - Nonaggregated (raw) PCLM fit with interval
-#' of length equal to the shortest original
-#' interval length divided by \code{x.div}. See \code{\link{pclm.control}}}.
-#' }
+#' @param type Type of PCLM plot: \itemize{ \item{\code{"aggregated"} -
+#'   Aggregated PCLM fit with interval length of \code{out.step}}. See
+#'   \code{\link{pclm.fit}}. \item{\code{"nonaggregated"} - Nonaggregated (raw)
+#'   PCLM fit with interval of length equal to the shortest original interval
+#'   length divided by \code{x.div}. See \code{\link{pclm.control}}}. }
 #' @param xlab Optional label for the X-axis.
 #' @param ylab Optional label for the Y-axis.
 #' @param xlim Optional limits of the X-axis.
 #' @param ylim Optional limits of the Y-axis.
-#' @param legpos.x,legpos.y Position of the \code{\link{legend}}. If \code{legpos.x == NULL} then legend is not plotted.
+#' @param legpos.x,legpos.y Position of the \code{\link{legend}}. If
+#'   \code{legpos.x == NULL} then legend is not plotted.
 #'
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @seealso \code{\link{pclm.fit}} \code{\link{summary.pclm}}
 #' @keywords internal
 #' @export
@@ -732,53 +777,68 @@ plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab,
 
 #' Penalized Composite Linear Model (PCLM) for PASH object.
 #'
-#' @description
-#' The PCLM method is based on the composite link model, with
-#' a penalty added to ensure the smoothness of the target distribution.
-#' Estimates are obtained by maximizing a
-#' penalized likelihood. This maximization is performed efficiently by a version
-#' of the iteratively reweighted least-squares
-#' algorithm. Optimal values of the smoothing parameter are chosen by minimizing
-#' Bayesian or Akaike’ s Information Criterion
-#' [From Rizzi et al. 2015 abstract].
+#' The PCLM method is based on the composite link model, with a penalty added to
+#' ensure the smoothness of the target distribution. Estimates are obtained by
+#' maximizing a penalized likelihood. This maximization is performed efficiently
+#' by a version of the iteratively reweighted least-squares algorithm. Optimal
+#' values of the smoothing parameter are chosen by minimizing Bayesian or
+#' Akaike’ s Information Criterion [From Rizzi et al. 2015 abstract].
+#'
 #' @param object A \code{pash} object.
-#' @param out.step Age interval length in output aggregated life-table. If set to \code{"auto"}
-#'  then the parameter is automatically set to the length of the shortest age/time interval of pash life-table.
-#' @param population.size Population size. If it is not given then it will be retrieved from the
-#' pash object (if possible). You may want to set it to a high value (e.g. 10000) if the data has no information about population number.
-#' @param to.pash A way how the \code{pash} life-table is constructed:
-#' \itemize{
-#' \item{\code{"aggregated"} - The \code{pash} life-table is constructed from aggregated PCLM fit with interval length of \code{out.step}}.
-#' \item{\code{"nonaggregated"} - The \code{pash} life-table is constructed from nonaggregated (raw) PCLM fit with interval of length equal to the shortest original
-#' interval length divided by \code{x.div}. See \code{\link{pclm.control}}}.
-#' }
-#' @param nax.method A way of calculating nax in \code{\link{Inputlx}} if \code{to.pash == "nonaggregated"}.
-#' Possible values: \code{"udd"} (see \code{\link{naxUDD}}) or \code{"cfm"} (see \code{\link{naxCFMfromnmx}}).
-#' @param last_open Logical determining if to construct \code{pash} life-table with last open interval. See \code{\link{Inputlx}}.
-#' @param control List with additional parameters. See \code{\link{pclm.control}}.
-#' @return An object of classes \code{"pclm"} and \code{"pash"} with PCLM-based life-table and \code{$pclm} component.
-#' The function updates a \code{pash} object by fitting PCLM. \cr
-#' The new object inherits \code{source} and \code{time_unit} attributes from the original \code{pash} object as well as class \code{"pash"}.
-#' The pash life-table (component \code{$lt}) contains the life-table based on the fitted PCLM (aggregated or nonaggregated depending on \code{to.pash} parameter).
-#' The newly constructed \code{pash} object contains extra \code{$pclm} component needed to run \code{\link{summary}} and \code{\link{plot}} functions.
-#' \cr\cr List of \code{$pclm} sub-components:
-#' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit defined by \code{out.step}.}
+#' @param out.step Age interval length in output aggregated life-table. If set
+#'   to \code{"auto"} then the parameter is automatically set to the length of
+#'   the shortest age/time interval of pash life-table.
+#' @param population.size Population size. If it is not given then it will be
+#'   retrieved from the pash object (if possible). You may want to set it to a
+#'   high value (e.g. 10000) if the data has no information about population
+#'   number.
+#' @param to.pash A way how the \code{pash} life-table is constructed: \itemize{
+#'   \item{\code{"aggregated"} - The \code{pash} life-table is constructed from
+#'   aggregated PCLM fit with interval length of \code{out.step}}.
+#'   \item{\code{"nonaggregated"} - The \code{pash} life-table is constructed
+#'   from nonaggregated (raw) PCLM fit with interval of length equal to the
+#'   shortest original interval length divided by \code{x.div}. See
+#'   \code{\link{pclm.control}}}. }
+#' @param nax.method A way of calculating nax in \code{\link{Inputlx}} if
+#'   \code{to.pash == "nonaggregated"}. Possible values: \code{"udd"} (see
+#'   \code{\link{naxUDD}}) or \code{"cfm"} (see \code{\link{naxCFMfromnmx}}).
+#' @param last_open Logical determining if to construct \code{pash} life-table
+#'   with last open interval. See \code{\link{Inputlx}}.
+#' @param control List with additional parameters. See
+#'   \code{\link{pclm.control}}.
+#' @return An object of classes \code{"pclm"} and \code{"pash"} with PCLM-based
+#'   life-table and \code{$pclm} component. The function updates a \code{pash}
+#'   object by fitting PCLM. \cr The new object inherits \code{source} and
+#'   \code{time_unit} attributes from the original \code{pash} object as well as
+#'   class \code{"pash"}. The pash life-table (component \code{$lt}) contains
+#'   the life-table based on the fitted PCLM (aggregated or nonaggregated
+#'   depending on \code{to.pash} parameter). The newly constructed \code{pash}
+#'   object contains extra \code{$pclm} component needed to run
+#'   \code{\link{summary}} and \code{\link{plot}} functions. \cr\cr List of
+#'   \code{$pclm} sub-components:
+#' @return \item{\code{grouped}}{Life-table based on aggregated PCLM fit defined
+#'   by \code{out.step}.}
 #' @return \item{\code{raw}}{Life-table based on original (raw) PCLMfit.}
 #' @return \item{\code{fit}}{PCLM fit used to construct life-tables.}
 #' @return \item{\code{warn.list}}{List with warnings.}
-#' @return \item{\code{m}}{Interval multiple, see \code{\link{pclm.interval.multiple}}, \code{\link{pclm.compmat}}.}
-#' @return \item{\code{x.div}}{Value of \code{x.div}, see \code{\link{pclm.control}}.}
-#' @return \item{\code{out.step}}{Interval length of aggregated life-table, see \code{\link{pclm.control}}.}
-#' @details
-#' The function read \code{pash} object and run \code{\link{pclm.general}} function. The new \code{pash} object is constructed from \code{\link{pclm.general}} output.
-#' \cr\cr
-#' Use \code{\link{pclm.general}} for more flexible and direct PCLM fitting.
-#' @seealso \code{\link{pclm.control}}, \code{\link{plot.pclm}}, \code{\link{summary.pclm}}, \code{\link{pash}}
-#' @references
-#' \enumerate{
-#' \item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
-#' \item{Rizzi S, Thinggaard M, Engholm G, et al. Comparison of non-parametric methods for ungrouping coarsely aggregated data. BMC Medical Research Methodology. 2016;16:59. doi:10.1186/s12874-016-0157-8.}
-#' }
+#' @return \item{\code{m}}{Interval multiple, see
+#'   \code{\link{pclm.interval.multiple}}, \code{\link{pclm.compmat}}.}
+#' @return \item{\code{x.div}}{Value of \code{x.div}, see
+#'   \code{\link{pclm.control}}.}
+#' @return \item{\code{out.step}}{Interval length of aggregated life-table, see
+#'   \code{\link{pclm.control}}.}
+#' @details The function read \code{pash} object and run
+#'   \code{\link{pclm.general}} function. The new \code{pash} object is
+#'   constructed from \code{\link{pclm.general}} output. \cr\cr Use
+#'   \code{\link{pclm.general}} for more flexible and direct PCLM fitting.
+#' @seealso \code{\link{pclm.control}}, \code{\link{plot.pclm}},
+#'   \code{\link{summary.pclm}}, \code{\link{pash}}
+#' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+#'   estimation of smooth distributions from coarsely grouped data. Am J
+#'   Epidemiol. 2015;182:138?47.} \item{Rizzi S, Thinggaard M, Engholm G, et al.
+#'   Comparison of non-parametric methods for ungrouping coarsely aggregated
+#'   data. BMC Medical Research Methodology. 2016;16:59.
+#'   doi:10.1186/s12874-016-0157-8.} }
 #' @examples
 #' \dontrun{
 #' # *******************************************************************
@@ -994,7 +1054,8 @@ plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab,
 #'
 #' # **** See more examples in the help for pclm.nclasses() function.
 #' }
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 #' @export
 pclm.fit<-function(object, population.size, out.step = 'auto', to.pash = c("aggregated", "nonaggregated"), last_open = FALSE, nax.method = c("udd", "cfm"), control = list()){
   #retriving origial ndx from the input of pash package
@@ -1046,13 +1107,15 @@ pclm.fit<-function(object, population.size, out.step = 'auto', to.pash = c("aggr
 
 #' Head function for PCLM object
 #'
-#' @description
-#' \emph{bold{Generic function}}
 #' @export
 #' @param object PCLM object.
-#' @param n A single integer. If positive, size for the resulting object: number of rows for a life-table. If negative, all but the n last/first number of elements of x.
-#' @param type which life-table  should be returned. One of \code{"lt"}, \code{"aggregated"} or \code{"nonaggregated"}.
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @param n A single integer. If positive, size for the resulting object: number
+#'   of rows for a life-table. If negative, all but the n last/first number of
+#'   elements of x.
+#' @param type which life-table  should be returned. One of \code{"lt"},
+#'   \code{"aggregated"} or \code{"nonaggregated"}.
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated")){
   if (!inherits(object, "pash")) {
     if (type == "lt") stop('"lt" not supported for non-pash object.')
@@ -1074,13 +1137,15 @@ head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"
 
 #' Tail function for PCLM object
 #'
-#' @description
-#' \emph{bold{Generic function}}
 #' @export
 #' @param object PCLM object.
-#' @param n A single integer. If positive, size for the resulting object: number of rows for a life-table. If negative, all but the n last/first number of elements of x.
-#' @param type which life-table  should be returned. One of \code{"lt"}, \code{"aggregated"} or \code{"nonaggregated"}.
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @param n A single integer. If positive, size for the resulting object: number
+#'   of rows for a life-table. If negative, all but the n last/first number of
+#'   elements of x.
+#' @param type which life-table  should be returned. One of \code{"lt"},
+#'   \code{"aggregated"} or \code{"nonaggregated"}.
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated")){
   if (!inherits(object, "pash")) {
     if (type == "lt") stop('"lt" not supported for non-pash object.')
@@ -1102,13 +1167,13 @@ tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated"))
 
 #' Print function for PCLM object
 #'
-#' @description
-#' \emph{bold{Generic function}}
 #' @export
 #' @param object PCLM object.
-#' @param type which life-table  should be returned. One of \code{"lt"}, \code{"aggregated"} or \code{"nonaggregated"}.
+#' @param type which life-table  should be returned. One of \code{"lt"},
+#'   \code{"aggregated"} or \code{"nonaggregated"}.
 #' @param ... other parameters passed to \code{\link{print}}.
-#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+#' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
+#'   <\email{maciej.danko@gmail.com}>
 print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...){
   if (!inherits(object, "pash")) {
     if (type == "lt") stop('"lt" not supported for non-pash object.')
@@ -1130,10 +1195,10 @@ print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...)
 
 #' Head function for pash object
 #'
-#' @description
-#' \emph{bold{Generic function}}
 #' @param object Pash object.
-#' @param n A single integer. If positive, size for the resulting object: number of rows for a life-table. If negative, all but the n last/first number of elements of x.
+#' @param n A single integer. If positive, size for the resulting object: number
+#'   of rows for a life-table. If negative, all but the n last/first number of
+#'   elements of x.
 #' @export
 head.pash<-function(object, n = 6L){
   head(object$lt, n = n)
@@ -1143,10 +1208,10 @@ head.pash<-function(object, n = 6L){
 
 #' Tail function for pash object
 #'
-#' @description
-#' \emph{bold{Generic function}}
 #' @param object pclm - pash object.
-#' @param n A single integer. If positive, size for the resulting object: number of rows for a life-table. If negative, all but the n last/first number of elements of x.
+#' @param n A single integer. If positive, size for the resulting object: number
+#'   of rows for a life-table. If negative, all but the n last/first number of
+#'   elements of x.
 #' @export
 tail.pash<-function(object, n = 6L){
   tail(object$lt, n = n)
