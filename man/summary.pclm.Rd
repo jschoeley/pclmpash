@@ -2,21 +2,21 @@
 % Please edit documentation in R/pclm_pash.r
 \name{summary.pclm}
 \alias{summary.pclm}
-\title{Summary of the fitted PCLM object}
+\title{Summary of the Fitted PCLM Object}
 \usage{
-summary.pclm(object)
+\method{summary}{pclm}(object)
 }
 \arguments{
 \item{object}{Fitted PCLM object.}
 }
 \description{
-\emph{bold{Generic function}}
-}
-\author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Summary of the Fitted PCLM Object
 }
 \seealso{
 \code{\link{pclm.fit}} \code{\link{plot.pclm}}
 }
+\author{
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
+}
 \keyword{internal}
-

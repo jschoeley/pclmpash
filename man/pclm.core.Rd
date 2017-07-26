@@ -2,7 +2,7 @@
 % Please edit documentation in R/pclm_pash.r
 \name{pclm.core}
 \alias{pclm.core}
-\title{Fit the penalized composite link model (PCLM)}
+\title{Fit the Penalized Composite Link Model (PCLM)}
 \usage{
 pclm.core(CompositionMatrix, lambda = 1, control = list())
 }
@@ -11,7 +11,8 @@ pclm.core(CompositionMatrix, lambda = 1, control = list())
 
 \item{lambda}{Smoothing parameter.}
 
-\item{control}{List with additional parameters. See \code{\link{pclm.control}}.}
+\item{control}{List with additional parameters. See
+\code{\link{pclm.control}}.}
 }
 \value{
 List with components:
@@ -27,18 +28,18 @@ List with components:
 \item{\code{warn.list}}{List with warnings.}
 }
 \description{
-Efficient estimation of smooth distribution from coarsely grouped data based on
-PCLM algorithm described in Rizzi et al. 2015.
-For further description see the reference [1] and \code{\link{pclm.fit}}.\cr\cr
-\emph{\bold{The internal function}}.
-}
-\author{
-Silvia Rizzi (original code, see Appendix #2 of the reference [1]), Maciej J. Danko (modification) <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Efficient estimation of smooth distribution from coarsely grouped data based
+on PCLM algorithm described in Rizzi et al. 2015. For further description see
+the reference [1] and \code{\link{pclm.fit}}.
 }
 \references{
-\enumerate{
-\item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
+\enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+estimation of smooth distributions from coarsely grouped data. Am J
+Epidemiol. 2015;182:138?47.} }
 }
+\author{
+Silvia Rizzi (original code, see Appendix #2 of the reference [1]),
+Maciej J. Danko (modification) <\email{danko@demogr.mpg.de}>
+<\email{maciej.danko@gmail.com}>
 }
 \keyword{internal}
-

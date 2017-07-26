@@ -2,21 +2,26 @@
 % Please edit documentation in R/pclm_pash.r
 \name{head.pclm}
 \alias{head.pclm}
-\title{Head function for PCLM object}
+\title{Head of PCLM Object}
 \usage{
-head.pclm(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"))
+\method{head}{pclm}(object, n = 6L, type = c("lt", "aggregated",
+  "nonaggregated"))
 }
 \arguments{
 \item{object}{PCLM object.}
 
-\item{n}{A single integer. If positive, size for the resulting object: number of rows for a life-table. If negative, all but the n last/first number of elements of x.}
+\item{n}{A single integer. If positive, size for the resulting object: number
+of rows for a life-table. If negative, all but the n last/first number of
+elements of x.}
 
-\item{type}{which life-table  should be returned. One of \code{"lt"}, \code{"aggregated"} or \code{"nonaggregated"}.}
+\item{type}{which life-table  should be returned. One of \code{"lt"},
+\code{"aggregated"} or \code{"nonaggregated"}.}
 }
 \description{
-\emph{bold{Generic function}}
+Head of PCLM Object
 }
 \author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
 }
-
+\keyword{internal}

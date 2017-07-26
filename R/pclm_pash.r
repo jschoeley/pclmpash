@@ -1,8 +1,3 @@
-require(Matrix)
-require(splines)
-require(MortalitySmooth)
-require(pash)
-
 # pclm.control ---------------------------------------------------------------
 
 #' Control the PCLM Fitting
@@ -244,9 +239,6 @@ pclm.nclasses<-function(x, control = list()) {
 #'   \code{\link{pclm.interval.multiple}}, and \code{\link{pclm.nclasses}}.
 #' @keywords internal
 pclm.compmat<-function(x, y, exposures = NULL, control = list()){
-  require(Matrix)
-  require(splines)
-  require(MortalitySmooth)
 
   control <- do.call("pclm.control", control)
 
@@ -296,9 +288,9 @@ pclm.compmat<-function(x, y, exposures = NULL, control = list()){
 
   segm <- round(x * control$x.div)
   if (length(unique(segm)) != length(segm)) stop('Non-unique values in x after rounding. Try to increase x.max.ext, x.div, or round age classes manually.')
-  C2 <- approx(x = segm + 1, y = 1:length(segm), method = 'constant', xout = (min(segm):(max(segm))) + 1, rule = 2)
-  SparMat <- Matrix:::sparseMatrix(C2$y, C2$x)
-  C. <- 1 * Matrix(SparMat, sparse = FALSE)
+  C2 <- stats::approx(x = segm + 1, y = 1:length(segm), method = 'constant', xout = (min(segm):(max(segm))) + 1, rule = 2)
+  SparMat <- Matrix::sparseMatrix(C2$y, C2$x)
+  C. <- 1 * Matrix::Matrix(SparMat, sparse = FALSE)
   if (control$bs.use) {
     if (length(exposures) > 0) stop('Exposures cannot be used together with B-Splines.')
     control$bs.method <- control$bs.method[1]
@@ -308,7 +300,7 @@ pclm.compmat<-function(x, y, exposures = NULL, control = list()){
     else if(is.na(as.numeric(control$bs.df))) stop(paste('Wrong bs.df parameter:', control$bs.df))
     control$bs.df <- max(length(segm)-2, min(control$bs.df, length(segm) * control$x.div-2))
     if (control$bs.method == 'bs'){
-      X <- splines:::bs(C2$x, df = control$bs.df)
+      X <- splines::bs(C2$x, df = control$bs.df)
     } else if (tolower(control$bs.method) == 'mortalitysmooth'){
       X <- .MortSmooth_Bbase(C2$x, df = control$bs.df)
     } else stop('Unknown B-spline basis method.')
@@ -368,9 +360,9 @@ pclm.core <- function(CompositionMatrix, lambda = 1, control = list()){
   y <-  CompositionMatrix$y
   y <- as.matrix(as.vector(y))
   nx <- dim(X)[2] #number of small classes
-  D <- base:::diff(diag(nx), diff = control$pclm.deg)
-  bstart <- log(sum(y) / nx);
-  b <- rep(bstart, nx);
+  D <- diff(diag(nx), diff = control$pclm.deg)
+  bstart <- log(sum(y) / nx)
+  b <- rep(bstart, nx)
   was.break <- FALSE
   for (it in 1:control$pclm.max.iter) {
     b0 <- b
@@ -382,7 +374,7 @@ pclm.core <- function(CompositionMatrix, lambda = 1, control = list()){
     Q <- C %*% (Gam * X)
     z <- c(y - mu + Q %*% b, rep(0, nx - control$pclm.deg))
     ls.x <- rbind(Q, D)
-    Fit <- lsfit(ls.x, z, wt = w, intercept = FALSE, tolerance = control$pclm.lsfit.tol)
+    Fit <- stats::lsfit(ls.x, z, wt = w, intercept = FALSE, tolerance = control$pclm.lsfit.tol)
     b <- Fit$coef
     db <- max(abs(b - b0))
     if (db < control$pclm.tol) {
@@ -437,7 +429,7 @@ pclm.opt<-function(CompositionMatrix, control = list()){
   if (toupper(control$opt.method) == 'AIC') opty<-function (log10lam) tryme(pclm.core(CompositionMatrix, lambda = 10^log10lam, control = control)$aic) else
     if (toupper(control$opt.method) == 'BIC') opty<-function (log10lam) tryme(pclm.core(CompositionMatrix, lambda = 10^log10lam, control = control)$bic) else
       stop('Unknown method of lambda optimization.')
-  res.opt <- stats:::optimize(f = opty, interval = c(-12, 22), tol = control$opt.tol)$minimum
+  res.opt <- stats::optimize(f = opty, interval = c(-12, 22), tol = control$opt.tol)$minimum
   if((round(res.opt) <= -11.9) || (round(res.opt) >= 21.9)) {
     WARN <- 'Lambda reached boundary values.'
     warning(immediate. = TRUE, WARN)
@@ -678,11 +670,11 @@ pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', ex
 #' @export
 summary.pclm <- function(object){
   if (!inherits(object, 'pclm')) {
-    if (inherits(object, 'pash')) pash:::summary.pash(object) else stop ('Object of class pclm needed')
+    if (inherits(object, 'pash')) pash::summary.pash(object) else stop ('Object of class pclm needed')
   } else {
     if (inherits(object, 'pash')) {
       message('Summary of the pash object:')
-      pash:::summary.pash(object)
+      pash::summary.pash(object)
       object <- object$pclm
       cat('\n\n')
     }
@@ -733,6 +725,7 @@ summary.pclm <- function(object){
 #' @seealso \code{\link{pclm.fit}} \code{\link{summary.pclm}}
 #' @keywords internal
 #' @export
+#' @importFrom graphics barplot lines axis par box
 plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab, xlim, ylim, legpos.x = "topleft", legpos.y = NULL){
   if (missing(xlab)) if (inherits(object, 'pash')) xlab <- attributes(object)$time_unit else xlab <- 'Age or time'
   if (!inherits(object, 'pclm')) {
@@ -780,7 +773,6 @@ plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab,
 
 #' Head of PCLM Object
 #'
-#' @export
 #' @param object PCLM object.
 #' @param n A single integer. If positive, size for the resulting object: number
 #'   of rows for a life-table. If negative, all but the n last/first number of
@@ -789,6 +781,9 @@ plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab,
 #'   \code{"aggregated"} or \code{"nonaggregated"}.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
+#' @importFrom utils head
+#' @keywords internal
+#' @export
 head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated")){
   if (!inherits(object, "pash")) {
     if (type == "lt") stop('"lt" not supported for non-pash object.')
@@ -810,7 +805,6 @@ head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"
 
 #' Tail of PCLM Object
 #'
-#' @export
 #' @param object PCLM object.
 #' @param n A single integer. If positive, size for the resulting object: number
 #'   of rows for a life-table. If negative, all but the n last/first number of
@@ -819,6 +813,9 @@ head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"
 #'   \code{"aggregated"} or \code{"nonaggregated"}.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
+#' @importFrom utils tail
+#' @keywords internal
+#' @export
 tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated")){
   if (!inherits(object, "pash")) {
     if (type == "lt") stop('"lt" not supported for non-pash object.')
@@ -840,13 +837,14 @@ tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated"))
 
 #' Print PCLM Object
 #'
-#' @export
 #' @param object PCLM object.
 #' @param type which life-table  should be returned. One of \code{"lt"},
 #'   \code{"aggregated"} or \code{"nonaggregated"}.
 #' @param ... other parameters passed to \code{\link{print}}.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
+#' @keywords internal
+#' @export
 print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...){
   if (!inherits(object, "pash")) {
     if (type == "lt") stop('"lt" not supported for non-pash object.')
@@ -856,10 +854,10 @@ print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...)
   }
   type <- type[1]
   if (type == "lt")
-    pash:::print.pash(object, ...)
+    pash::print.pash(object, ...)
   else if (type == "aggregated")
-    print(object$pclm$grouped, ...)
+    print.data.frame(object$pclm$grouped, ...)
   else if (type == "nonaggregated")
-    print(object$pclm$raw, ...)
+    print.data.frame(object$pclm$raw, ...)
   else stop('Unknown type')
 }

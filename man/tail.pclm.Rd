@@ -2,21 +2,26 @@
 % Please edit documentation in R/pclm_pash.r
 \name{tail.pclm}
 \alias{tail.pclm}
-\title{Tail function for PCLM object}
+\title{Tail of PCLM Object}
 \usage{
-tail.pclm(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"))
+\method{tail}{pclm}(object, n = 6L, type = c("lt", "aggregated",
+  "nonaggregated"))
 }
 \arguments{
 \item{object}{PCLM object.}
 
-\item{n}{A single integer. If positive, size for the resulting object: number of rows for a life-table. If negative, all but the n last/first number of elements of x.}
+\item{n}{A single integer. If positive, size for the resulting object: number
+of rows for a life-table. If negative, all but the n last/first number of
+elements of x.}
 
-\item{type}{which life-table  should be returned. One of \code{"lt"}, \code{"aggregated"} or \code{"nonaggregated"}.}
+\item{type}{which life-table  should be returned. One of \code{"lt"},
+\code{"aggregated"} or \code{"nonaggregated"}.}
 }
 \description{
-\emph{bold{Generic function}}
+Tail of PCLM Object
 }
 \author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
 }
-
+\keyword{internal}

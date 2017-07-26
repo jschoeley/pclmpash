@@ -9,4 +9,18 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+Depends:
+  R (>= 2.10)
+RoxygenNote: 6.0.1
+Imports:
+  pash,
+  stats,
+  Matrix,
+  splines,
+  graphics,
+  utils
+Suggests:
+  knitr,
+  rmarkdown
+VignetteBuilder: knitr
+

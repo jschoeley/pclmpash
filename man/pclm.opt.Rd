@@ -2,14 +2,15 @@
 % Please edit documentation in R/pclm_pash.r
 \name{pclm.opt}
 \alias{pclm.opt}
-\title{Optimize the smooth parameter \code{lambda} for PCLM method}
+\title{Optimize the Smoothing Parameter \code{lambda} for PCLM Method}
 \usage{
 pclm.opt(CompositionMatrix, control = list())
 }
 \arguments{
 \item{CompositionMatrix}{Output of \code{\link{pclm.compmat}}.}
 
-\item{control}{List with additional parameters. See \code{\link{pclm.control}}.}
+\item{control}{List with additional parameters. See
+\code{\link{pclm.control}}.}
 }
 \value{
 List with components:
@@ -20,22 +21,24 @@ List with components:
 
 \item{\code{lambda}}{Optimal smooth parameter.}
 
-\item{\code{fit}}{Output of the \code{\link{pclm.core}} derived for the optimal \code{lambda}.}
+\item{\code{fit}}{Output of the \code{\link{pclm.core}} derived for
+  the optimal \code{lambda}.}
 
-\item{\code{CompositionMatrix}}{Used composition matrix. See also \code{\link{pclm.compmat}}.}
+\item{\code{CompositionMatrix}}{Used composition matrix. See also
+  \code{\link{pclm.compmat}}.}
 
 \item{\code{warn.list}}{List with warnings.}
 }
 \description{
-\emph{\bold{The internal function}}.
-}
-\author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Optimize the Smoothing Parameter \code{lambda} for PCLM Method
 }
 \references{
-\enumerate{
-\item{Rizzi S, Gampe J, Eilers PHC. Efficient estimation of smooth distributions from coarsely grouped data. Am J Epidemiol. 2015;182:138?47.}
+\enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
+estimation of smooth distributions from coarsely grouped data. Am J
+Epidemiol. 2015;182:138?47.} }
 }
+\author{
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
 }
 \keyword{internal}
-

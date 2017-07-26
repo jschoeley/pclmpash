@@ -2,7 +2,7 @@
 % Please edit documentation in R/pclm_pash.r
 \name{plot.pclm}
 \alias{plot.pclm}
-\title{Diagnostic plot for PCLM object.}
+\title{Diagnostic Plot for PCLM Object}
 \usage{
 \method{plot}{pclm}(object, type = c("aggregated", "nonaggregated"), xlab,
   ylab, xlim, ylim, legpos.x = "topleft", legpos.y = NULL)
@@ -10,14 +10,11 @@
 \arguments{
 \item{object}{Fitted PCLM object.}
 
-\item{type}{Type of PCLM plot:
-\itemize{
-\item{\code{"aggregated"} - Aggregated PCLM fit with interval length of \code{out.step}}.
-See \code{\link{pclm.fit}}.
-\item{\code{"nonaggregated"} - Nonaggregated (raw) PCLM fit with interval
-of length equal to the shortest original
-interval length divided by \code{x.div}. See \code{\link{pclm.control}}}.
-}}
+\item{type}{Type of PCLM plot: \itemize{ \item{\code{"aggregated"} -
+Aggregated PCLM fit with interval length of \code{out.step}}. See
+\code{\link{pclm.fit}}. \item{\code{"nonaggregated"} - Nonaggregated (raw)
+PCLM fit with interval of length equal to the shortest original interval
+length divided by \code{x.div}. See \code{\link{pclm.control}}}. }}
 
 \item{xlab}{Optional label for the X-axis.}
 
@@ -27,16 +24,17 @@ interval length divided by \code{x.div}. See \code{\link{pclm.control}}}.
 
 \item{ylim}{Optional limits of the Y-axis.}
 
-\item{legpos.x, legpos.y}{Position of the \code{\link{legend}}. If \code{legpos.x == NULL} then legend is not plotted.}
+\item{legpos.x, legpos.y}{Position of the \code{\link{legend}}. If
+\code{legpos.x == NULL} then legend is not plotted.}
 }
 \description{
-\emph{bold{Generic function}}
-}
-\author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Diagnostic Plot for PCLM Object
 }
 \seealso{
 \code{\link{pclm.fit}} \code{\link{summary.pclm}}
 }
+\author{
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
+}
 \keyword{internal}
-

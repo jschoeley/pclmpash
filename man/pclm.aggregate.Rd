@@ -2,7 +2,7 @@
 % Please edit documentation in R/pclm_pash.r
 \name{pclm.aggregate}
 \alias{pclm.aggregate}
-\title{Calculate raw and aggregated life table from the object returned by \code{pclm.opt()} function.}
+\title{Calculate Raw and Aggregated Life-tables}
 \usage{
 pclm.aggregate(fit, out.step = NULL, count.type = c("DX", "LX"),
   exposures.used = FALSE)
@@ -12,14 +12,17 @@ pclm.aggregate(fit, out.step = NULL, count.type = c("DX", "LX"),
 
 \item{out.step}{Output interval length.}
 
-\item{count.type}{Type of the data, deaths(\code{"DX"})(default) or exposures(\code{"LX"}.)}
+\item{count.type}{Type of the data, deaths(\code{"DX"})(default) or
+exposures(\code{"LX"}.)}
 
-\item{exposures.used}{Logical indicating if exposures were used to create composition matrix.}
+\item{exposures.used}{Logical indicating if exposures were used to create
+composition matrix.}
 }
 \value{
 List with components:
 
-\item{\code{grouped}}{Life-table based on aggregated PCLM fit defined by \code{out.step}.}
+\item{\code{grouped}}{Life-table based on aggregated PCLM fit defined
+  by \code{out.step}.}
 
 \item{\code{raw}}{Life-table based on original (raw) PCLM fit.}
 
@@ -28,13 +31,14 @@ List with components:
 \item{\code{warn.list}}{List with warnings.}
 }
 \description{
-\emph{\bold{The internal function}}.
-}
-\author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Calculate raw and aggregated life-tables From the object returned by the
+\code{pclm.opt()} Function.
 }
 \seealso{
 \code{\link{pclm.fit}}
 }
+\author{
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
+}
 \keyword{internal}
-

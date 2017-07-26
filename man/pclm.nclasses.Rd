@@ -2,17 +2,19 @@
 % Please edit documentation in R/pclm_pash.r
 \name{pclm.nclasses}
 \alias{pclm.nclasses}
-\title{Calculate the number of PCLM internal (raw) classes}
+\title{Calculate the Number of Internal PCLM Age Classes}
 \usage{
 pclm.nclasses(x, control = list())
 }
 \arguments{
 \item{x}{Vector with start of the interval for age/time classes.}
 
-\item{control}{List with additional parameters. See \code{\link{pclm.control}}.}
+\item{control}{List with additional parameters. See
+\code{\link{pclm.control}}.}
 }
 \description{
-Calculate the number of PCLM internal (raw) classes.
+Calculate the number of internal PCLM age classes used in construction of the
+composition matrix.
 }
 \examples{
 \dontrun{
@@ -37,10 +39,11 @@ plot(AU10p.1B)
 # **** See more examples in the help for pclm.fit() function.
 }
 }
-\author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
-}
 \seealso{
-\code{\link{pclm.fit}}, \code{\link{pclm.control}}, \code{\link{pclm.interval.multiple}},
+\code{\link{pclm.fit}}, \code{\link{pclm.control}},
+  \code{\link{pclm.interval.multiple}},
 }
-
+\author{
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
+}

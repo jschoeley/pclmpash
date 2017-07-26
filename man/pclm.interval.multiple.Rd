@@ -2,24 +2,27 @@
 % Please edit documentation in R/pclm_pash.r
 \name{pclm.interval.multiple}
 \alias{pclm.interval.multiple}
-\title{Multiple for the original age/time interval length}
+\title{Calculate Smallest Factor Removing Fractions in Input Vector}
 \usage{
 pclm.interval.multiple(x, control = list())
 }
 \arguments{
 \item{x}{Vector with start of the interval for age/time classes.}
 
-\item{control}{List with additional parameters. See \code{\link{pclm.control}}.}
+\item{control}{List with additional parameters. See
+\code{\link{pclm.control}}.}
 }
 \description{
-Calculates minimal multiple of the orginal age/time interval length to remove fractions in \code{x}.
-The function (together with \code{x} and some control parameters) is used to calculate the
-internal (raw, nonaggregated) interval length during PCLM computations.
-}
-\author{
-Maciej J. Danko <\email{danko@demogr.mpg.de}> <\email{maciej.danko@gmail.com}>
+Calculates minimal multiple of the orginal age/time interval length to remove
+fractions in \code{x}. The function (together with \code{x} and some control
+parameters) is used to calculate the internal (raw, nonaggregated) interval
+length during PCLM computations.
 }
 \seealso{
-\code{\link{pclm.general}}, \code{\link{pclm.control}}, and \code{\link{pclm.nclasses}}.
+\code{\link{pclm.general}}, \code{\link{pclm.control}}, and
+  \code{\link{pclm.nclasses}}.
 }
-
+\author{
+Maciej J. Danko <\email{danko@demogr.mpg.de}>
+  <\email{maciej.danko@gmail.com}>
+}
