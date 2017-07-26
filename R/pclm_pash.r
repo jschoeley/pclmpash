@@ -579,8 +579,14 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
 #'   <\email{maciej.danko@gmail.com}>
 #' @examples
-#' # Explicit examples of use \code{pclm.general} (especially how to use exposures)
-#' # are to be written in a next package release.
+#' library(pash)
+#'
+#' AU10 <- Inputlx(x = australia_10y$x, lx = australia_10y$lx,
+#'                 nax = australia_10y$nax, nx = australia_10y$nx,
+#'                 last_open = TRUE)
+#'
+#' AU10pclm <- pclm.general(x = AU10$lt$x, y = AU10$lt$ndx*10000)
+#' AU10pclm
 #' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
 #' estimation of smooth distributions from coarsely grouped data. Am J
 #' Epidemiol. 2015;182:138?47.} \item{Rizzi S, Thinggaard M, Engholm G, et al.

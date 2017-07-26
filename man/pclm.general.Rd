@@ -66,8 +66,14 @@ found in reference [1], but see also \code{\link{pclm.general}} and
 \code{\link{pclm.compmat}}.
 }
 \examples{
-# Explicit examples of use \\code{pclm.general} (especially how to use exposures)
-# are to be written in a next package release.
+library(pash)
+
+AU10 <- Inputlx(x = australia_10y$x, lx = australia_10y$lx,
+                nax = australia_10y$nax, nx = australia_10y$nx,
+                last_open = TRUE)
+
+AU10pclm <- pclm.general(x = AU10$lt$x, y = AU10$lt$ndx*10000)
+AU10pclm
 }
 \references{
 \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
