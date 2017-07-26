@@ -1,11 +1,10 @@
 Package: pclmpash
 Type: Package
-Title: What the Package Does (Title Case)
+Title: PCLM Ungrouping of Life-tables
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Maciej J. Danko, Silvia Rizzi, Jonas Schoeley, Carlo G. Camarda
+Maintainer: Maciej J. Danko <maciej.danko@gmail.com>
+Description: Ungroup a life-table using the penalized composite linear model.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
