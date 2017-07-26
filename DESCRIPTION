@@ -13,13 +13,13 @@ Depends:
   R (>= 2.10)
 RoxygenNote: 6.0.1
 Imports:
-  pash,
   stats,
   Matrix,
   splines,
   graphics,
   utils
 Suggests:
+  pash,
   knitr,
   rmarkdown
 VignetteBuilder: knitr

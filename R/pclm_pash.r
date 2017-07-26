@@ -669,37 +669,27 @@ pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', ex
 #' @keywords internal
 #' @export
 summary.pclm <- function(object){
-  if (!inherits(object, 'pclm')) {
-    if (inherits(object, 'pash')) pash::summary.pash(object) else stop ('Object of class pclm needed')
-  } else {
-    if (inherits(object, 'pash')) {
-      message('Summary of the pash object:')
-      pash::summary.pash(object)
-      object <- object$pclm
-      cat('\n\n')
-    }
-    message('Summary of the pclm object:')
-    n1 <- diff(object$fit$CompositionMatrix$x)
-    n1 <- c(n1, n1[length(n1)])
-    z0 <- n1[1]/2
-    n2 <- diff(object$fit$X)
-    n2 <- c(n2, n2[length(n2)])
-    if (!is.na(object$fit$CompositionMatrix$open.int.len)) ind <- -(length(n1):(length(n1) - 1)) else ind <- 1:length(n1)
-    cat(paste(paste('PCLM total classes =', length(n2)),
-      paste('Number of smoothing parameters for B-/P-splines =', object$fit$control$bs.df),
-      paste('Original minimal interval length =', round(min(n1[ind]), 3)),
-      paste('Original maximal interval length =', round(max(n1[ind]), 3)),
-      paste('Open interval length =', round(object$fit$CompositionMatrix$open.int.len, 3)),
-      paste('Fractional age/time class correction (multiple) =', object$m),
-      paste('PCLM interval length =', round(min(n2), 3)),
-      paste('PCLM class divider (x.div) =', object$x.div),
-      paste('PCLM classes per original smallest interval length =', round(min(n1[ind]) / min(n2), 3)),
-      paste('PCLM classes per original biggest interval length =', round(max(n1[ind]) / max(n2), 3)), sep='\n'))
-    message('\nWarnings list:')
-    W <- unlist(object$warn.list)
-    print(W,  quote=F)
-    cat('\n')
-  }
+  message('Summary of the pclm object:')
+  n1 <- diff(object$fit$CompositionMatrix$x)
+  n1 <- c(n1, n1[length(n1)])
+  z0 <- n1[1]/2
+  n2 <- diff(object$fit$X)
+  n2 <- c(n2, n2[length(n2)])
+  if (!is.na(object$fit$CompositionMatrix$open.int.len)) ind <- -(length(n1):(length(n1) - 1)) else ind <- 1:length(n1)
+  cat(paste(paste('PCLM total classes =', length(n2)),
+            paste('Number of smoothing parameters for B-/P-splines =', object$fit$control$bs.df),
+            paste('Original minimal interval length =', round(min(n1[ind]), 3)),
+            paste('Original maximal interval length =', round(max(n1[ind]), 3)),
+            paste('Open interval length =', round(object$fit$CompositionMatrix$open.int.len, 3)),
+            paste('Fractional age/time class correction (multiple) =', object$m),
+            paste('PCLM interval length =', round(min(n2), 3)),
+            paste('PCLM class divider (x.div) =', object$x.div),
+            paste('PCLM classes per original smallest interval length =', round(min(n1[ind]) / min(n2), 3)),
+            paste('PCLM classes per original biggest interval length =', round(max(n1[ind]) / max(n2), 3)), sep='\n'))
+  message('\nWarnings list:')
+  W <- unlist(object$warn.list)
+  print(W,  quote=F)
+  cat('\n')
   invisible()
 }
 
@@ -725,7 +715,7 @@ summary.pclm <- function(object){
 #' @seealso \code{\link{pclm.fit}} \code{\link{summary.pclm}}
 #' @keywords internal
 #' @export
-#' @importFrom graphics barplot lines axis par box
+#' @importFrom graphics barplot lines axis par box legend
 plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab, xlim, ylim, legpos.x = "topleft", legpos.y = NULL){
   if (missing(xlab)) if (inherits(object, 'pash')) xlab <- attributes(object)$time_unit else xlab <- 'Age or time'
   if (!inherits(object, 'pclm')) {
@@ -854,7 +844,7 @@ print.pclm<-function(object, type = c("lt", "aggregated", "nonaggregated"), ...)
   }
   type <- type[1]
   if (type == "lt")
-    pash::print.pash(object, ...)
+    print.data.frame(object, ...)
   else if (type == "aggregated")
     print.data.frame(object$pclm$grouped, ...)
   else if (type == "nonaggregated")
