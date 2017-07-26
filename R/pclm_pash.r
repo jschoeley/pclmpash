@@ -5,7 +5,7 @@ require(pash)
 
 # pclm.control ---------------------------------------------------------------
 
-#' Auxiliary for controlling PCLM fitting
+#' Control the PCLM Fitting
 #'
 #' Auxiliary function for controlling PCLM fitting. Use this function to set
 #' control parameters of the \code{\link{pclm.fit}} and other related functions.
@@ -113,7 +113,7 @@ pclm.control<-function(x.div = 1L,
 
 # pclm.interval.multiple ---------------------------------------------------------------
 
-#' Multiple for the original age/time interval length
+#' Calculate Smallest Factor Removing Fractions in Input Vector
 #'
 #' Calculates minimal multiple of the orginal age/time interval length to remove
 #' fractions in \code{x}. The function (together with \code{x} and some control
@@ -140,9 +140,10 @@ pclm.interval.multiple <- function(x, control = list()) {
 
 # pclm.nclasses -----------------------------------------------
 
-#' Calculate the number of PCLM internal (raw) classes
+#' Calculate the Number of Internal PCLM Age Classes
 #'
-#' Calculate the number of PCLM internal (raw) classes.
+#' Calculate the number of internal PCLM age classes used in construction of the
+#' composition matrix.
 #'
 #' @param x Vector with start of the interval for age/time classes.
 #' @param control List with additional parameters. See
@@ -192,10 +193,10 @@ pclm.nclasses<-function(x, control = list()) {
 
 # pclm.compmat -------------------------------------------------------------------------
 
-#' Create composition matrix object
+#' Create Composition Matrix Object
 #'
 #' Construct the composition matrix object for automatically recalibrated age
-#' classes. \cr\cr \emph{\bold{The internal function}}.
+#' classes.
 #'
 #' @param x Vector with start of the interval for age/time classes. x * x.div
 #'   must be an integer. The appropriate correction for fractional intervals
@@ -336,12 +337,11 @@ pclm.compmat<-function(x, y, exposures = NULL, control = list()){
 
 # pclm.core ------------------------------------------------------------------------
 
-#' Fit the penalized composite link model (PCLM)
+#' Fit the Penalized Composite Link Model (PCLM)
 #'
 #' Efficient estimation of smooth distribution from coarsely grouped data based
 #' on PCLM algorithm described in Rizzi et al. 2015. For further description see
-#' the reference [1] and \code{\link{pclm.fit}}.\cr\cr \emph{\bold{The internal
-#' function}}.
+#' the reference [1] and \code{\link{pclm.fit}}.
 #'
 #' @param CompositionMatrix Object constructed by \code{\link{pclm.compmat}}.
 #' @param lambda Smoothing parameter.
@@ -410,7 +410,7 @@ pclm.core <- function(CompositionMatrix, lambda = 1, control = list()){
 
 # pclm.opt --------------------------------------------------------------------
 
-#' Optimize the smooth parameter \code{lambda} for PCLM method
+#' Optimize the Smoothing Parameter \code{lambda} for PCLM Method
 #'
 #' @param CompositionMatrix Output of \code{\link{pclm.compmat}}.
 #' @param control List with additional parameters. See
@@ -455,8 +455,10 @@ pclm.opt<-function(CompositionMatrix, control = list()){
 
 # pclm.aggregate ---------------------------------------------------
 
-#' Calculate raw and aggregated life table from the object returned by
-#' \code{pclm.opt()} function.
+#' Calculate Raw and Aggregated Life-tables
+#'
+#' Calculate raw and aggregated life-tables From the object returned by the
+#' \code{pclm.opt()} Function.
 #'
 #' @param fit Object obtained by \code{\link{pclm.opt}} function.
 #' @param out.step Output interval length.
@@ -543,9 +545,9 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 
 # pclm.general -------------------------------------------------------------------------
 
-#' General PCLM computations
+#' PCLM De-aggregation of Life-table
 #'
-#' Main procedure to calculate PCLM with automated step.
+#' De-aggregates a life-table using the PCLM method.
 #'
 #' @param x Vector with start of the interval for age/time classes.
 #' @param y Vector with counts, e.g. \code{ndx}. It must have the same length as
@@ -587,7 +589,8 @@ pclm.aggregate<-function(fit, out.step = NULL, count.type = c('DX', 'LX'), expos
 #'   <\email{maciej.danko@gmail.com}>
 #' @examples
 #' # The examples with use of the \code{pash} object are presented in \link{pclm.fit}.
-#' # Explicit examples of use \code{pclm.general} (especially how to use exposures) are to be written in a next package release.
+#' # Explicit examples of use \code{pclm.general} (especially how to use exposures)
+#' # are to be written in a next package release.
 #' @references \enumerate{ \item{Rizzi S, Gampe J, Eilers PHC. Efficient
 #' estimation of smooth distributions from coarsely grouped data. Am J
 #' Epidemiol. 2015;182:138?47.} \item{Rizzi S, Thinggaard M, Engholm G, et al.
@@ -665,7 +668,7 @@ pclm.general <- function(x, y, count.type = c('DX', 'LX'), out.step = 'auto', ex
 
 # summary.pclm -------------------------------------------------------------------------
 
-#' Summary of the fitted PCLM object
+#' Summary of the Fitted PCLM Object
 #'
 #' @param object Fitted PCLM object.
 #' @author Maciej J. Danko <\email{danko@demogr.mpg.de}>
@@ -710,7 +713,7 @@ summary.pclm <- function(object){
 
 # plot.pclm ---------------------------------------------------------------------------
 
-#' Diagnostic plot for PCLM object.
+#' Diagnostic Plot for PCLM Object
 #'
 #' @param object Fitted PCLM object.
 #' @param type Type of PCLM plot: \itemize{ \item{\code{"aggregated"} -
@@ -775,7 +778,7 @@ plot.pclm<-function(object, type = c("aggregated", "nonaggregated"), xlab, ylab,
 
 # pclm.fit ---------------------------------------------------------------
 
-#' Penalized Composite Linear Model (PCLM) for PASH object.
+#' Penalized Composite Linear Model (PCLM) for PASH Object
 #'
 #' The PCLM method is based on the composite link model, with a penalty added to
 #' ensure the smoothness of the target distribution. Estimates are obtained by
@@ -1105,7 +1108,7 @@ pclm.fit<-function(object, population.size, out.step = 'auto', to.pash = c("aggr
 
 # head.pclm ----------------------------------------------------
 
-#' Head function for PCLM object
+#' Head of PCLM Object
 #'
 #' @export
 #' @param object PCLM object.
@@ -1135,7 +1138,7 @@ head.pclm<-function(object, n = 6L, type = c("lt", "aggregated", "nonaggregated"
 
 # tail.pclm -----------------------------------------------------------
 
-#' Tail function for PCLM object
+#' Tail of PCLM Object
 #'
 #' @export
 #' @param object PCLM object.
@@ -1165,7 +1168,7 @@ tail.pclm<-function(object, n=6L, type = c("lt", "aggregated", "nonaggregated"))
 
 # print.pclm ------------------------------------------------------------
 
-#' Print function for PCLM object
+#' Print PCLM Object
 #'
 #' @export
 #' @param object PCLM object.
