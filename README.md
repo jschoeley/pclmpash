@@ -1,11 +1,8 @@
-pash - Pace and Shape Analysis in R
------------------------------------
+PCLM Ungrouping of Life-tables
+------------------------------
 
-[![Build Status](https://travis-ci.org/mpascariu/pclm.svg?branch=master)](https://travis-ci.org/mpascariu/pclm)
+[![Build Status](https://travis-ci.org/jschoeley/pclmpash.svg?branch=master)](https://travis-ci.org/jschoeley/pclmpash)
 
-`pash` lets you perform pace-shape analysis on life tables. Calculate a wide array of pace and shape metrics and use them to standardize and compare your data.
+A stripped down version for testing purposes which passes `R CMD check`. Forked from @MaciejDanko.
 
-Install with `r devtools::install_github("jschoeley/pash")`.
-
-- Step 1: Create a pace-shape object from life table columns using `Inputlx()` or `Inputmx()`.
-- Step 2: Using the pace-shape object as argument, calculate pace measures with `GetPace()`, calculate shape measures with `GetShape()`, standardize a life table by pace and shape with `StandardizeLT()`, rebase your life table to a different age with `RebaseLT()`.
+Install with `r devtools::install_github("jschoeley/pclmpash")`.
